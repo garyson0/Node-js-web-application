@@ -90,3 +90,50 @@ a.amasodik:hover,a.amasodik:link {
     color: yellow;
     text-decoration: none;
 }
+
+/* 7. pont */
+
+div {
+    border-style: double;
+    background-color: lightcoral;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+}
+
+/* 8.pont */
+#tablastilus {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;    
+    width: 100%;
+}
+
+#tablastilus td:first-child{
+    text-align: left;
+    border: 2px solid black;
+    background-color: brown;
+
+}
+
+#tablastilus td, #tablastilus th {
+    text-align: center;
+    border: 2px solid black;
+    background-color: lightseagreen;
+
+}
+
+/* 9. pont */
+
+.flex-box {
+    display: flex;
+    background-color: lightslategray;
+}
+
+.flex-box>:first-child {
+    color: blue;
+}
+
+.flex-box>:nth-child(2){
+    color: yellow;
+}
+
