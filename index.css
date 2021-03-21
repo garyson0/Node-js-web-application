@@ -8,10 +8,85 @@ img:hover {
     
 }
 
+/* 1. pont */
 body {
     background-image: url("bgimg.jpg");
     background-repeat: repeat-y;
    /*alapertelmezetten gordulo, nem kell ez: background-attachment: scroll; */
    background-size: 100%;
 
+}
+
+/* 2. pont */
+p, em {
+    color:brown;
+    background-color: rgb(171, 240, 132);
+    text-decoration: overline;
+}
+
+/* 3.pont */
+ul.elsoul {
+    list-style-type: circle;
+    background:burlywood;
+}
+
+ul.elsoul li {
+    background: grey;
+    margin: 2px;
+}
+
+ul.masodikul {
+    list-style-type: square;
+    list-style-position: outside;
+}
+
+ul.masodikul li {
+    background: yellow;
+    padding: 5px;
+}
+
+
+/* 4. pont */
+.negyedik {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 100;
+    font-style: oblique;
+    text-decoration: indigo;
+}
+
+/* 5. pont */
+section h2 + p {
+    color:red;
+    font-size: smaller;
+}
+
+/* 6. pont */
+a.aelso:hover, a.aelso:link{
+    color:green;
+    text-decoration: overline;
+}
+
+a.aelso:hover, a.aelso:visited {
+    color:red;
+    text-decoration: line-through;
+}
+
+a.aelso:hover,a.aelso:link {
+    color: indigo;
+    text-decoration: underline;
+}
+
+a.amasodik:hover,a.aelso:link {
+    color:red;
+    text-decoration: underline;
+}
+
+a.amasodik:hover,a.amasodik:visited {
+    color:skyblue;
+    text-decoration: overline;
+}
+
+a.amasodik:hover,a.amasodik:link {
+    color: yellow;
+    text-decoration: none;
 }
