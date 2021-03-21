@@ -1,12 +1,16 @@
 img {
     height: 300px;
     width: 300px;
+    transition: -webkit-transform 0.25s ease;
+    transition: transform 0.25s ease;
 }
-img:hover {
-    height: 500px;
-    width: 500px;
+
+img:active {
+    -webkit-transform:scale(2);
+    transform: scale(2);
     
 }
+
 
 /* 1. pont */
 body {
