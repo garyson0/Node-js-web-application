@@ -7,3 +7,11 @@ img:hover {
     width: 500px;
     
 }
+
+body {
+    background-image: url("bgimg.jpg");
+    background-repeat: repeat-y;
+   /*alapertelmezetten gordulo, nem kell ez: background-attachment: scroll; */
+   background-size: 100%;
+
+}
