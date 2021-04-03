@@ -1,3 +1,66 @@
+// beepitett checkValidity fuggveny burkolo fuggvenye
+function validDate() {
+    let dateElement = document.getElementById("szuldatum");
+    if(document.getElementById("errorMessageDate"))
+    {
+        document.getElementById("errorMessageDate").remove();
+    }
+    if(dateElement.checkValidity() === false)
+    {
+        let buttonElement = document.getElementById("buttON");
+        let errorMessageElement = document.createElement("p");
+        errorMessageElement.id = "errorMessageDate";
+        errorMessageElement.innerText = "Hibas datum!";
+        errorMessageElement.style.color = "red";
+        dateElement.parentNode.insertBefore(errorMessageElement,dateElement.nextSibling); // insert after
+
+        return false;
+
+    }
+    return true;
+}
+
+// beepitett checkValidity fuggveny burkolo fuggvenye
+function validFirstName() {
+    let firtNameElement = document.getElementById("csaladnev");
+    if(document.getElementById("errorMessageFirstName"))
+    {
+        document.getElementById("errorMessageFirstName").remove();
+    }
+    if(firtNameElement.checkValidity() === false)
+    {
+        let errorMessageElement = document.createElement("p");
+        errorMessageElement.id = "errorMessageFirstName";
+        errorMessageElement.innerText = "Hibas csaladnev!";
+        errorMessageElement.style.color = "red";
+        firtNameElement.parentNode.insertBefore(errorMessageElement,firtNameElement.nextSibling); // insert after
+
+        return false;
+
+    }
+    return true;
+}
+
+// beepitett checkValidity fuggveny burkolo fuggvenye
+function validLastName() {
+    let lastNameElement = document.getElementById("keresztnev");
+    if(document.getElementById("errorMessageLastName"))
+    {
+        document.getElementById("errorMessageLastName").remove();
+    }
+    if(lastNameElement.checkValidity() === false)
+    {
+        let errorMessageElement = document.createElement("p");
+        errorMessageElement.id = "errorMessageLastName";
+        errorMessageElement.innerText = "Hibas keresztnev!";
+        errorMessageElement.style.color = "red";
+        lastNameElement.parentNode.insertBefore(errorMessageElement,lastNameElement.nextSibling); // insert after
+
+        return false;
+
+    }
+    return true;
+}
 
 // email cim ellenorzes
 function validEmailAddress(email) {
@@ -13,7 +76,7 @@ function validEmailAddress(email) {
         hibaEmail.id = "hibasEmail"
         hibaEmail.innerText = "Hibas e-mail cim!";
         hibaEmail.style.color = "red";
-        elem.parentNode.insertBefore(hibaEmail,elem.nextSibling);
+        elem.parentNode.insertBefore(hibaEmail,elem.nextSibling); //insert after
         
         return false;
     }
@@ -35,7 +98,7 @@ function validWebPage(url) {
         hibaWeboldal.id = "hibasWeboldal"
         hibaWeboldal.innerText = "Hibas weboldal!";
         hibaWeboldal.style.color = "red";
-        elem.parentNode.insertBefore(hibaWeboldal,elem.nextSibling);
+        elem.parentNode.insertBefore(hibaWeboldal,elem.nextSibling); //insert after
 
         return false;
         
@@ -66,3 +129,5 @@ function addLastModifiedDate() {
     document.getElementsByTagName("footer")[0].innerText = time;
     document.getElementsByTagName("footer")[0].style.textAlign = 'center';
 }
+
+
