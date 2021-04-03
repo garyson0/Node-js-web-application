@@ -15,7 +15,9 @@ function validEmailAddress(email) {
         hibaEmail.style.color = "red";
         elem.parentNode.insertBefore(hibaEmail,elem.nextSibling);
         
+        return false;
     }
+    return true;
 }
 
 // url ellenorzes
@@ -34,8 +36,29 @@ function validWebPage(url) {
         hibaWeboldal.innerText = "Hibas weboldal!";
         hibaWeboldal.style.color = "red";
         elem.parentNode.insertBefore(hibaWeboldal,elem.nextSibling);
+
+        return false;
         
     }
+    return true;
+}
+
+function checkBeforeSubmit() {
+    let buttonElement = document.getElementById("buttON");
+    let dateElement = document.getElementById("szuldatum");
+    let firstName = document.getElementById("csaladnev");
+    let lastName = document.getElementById("keresztnev");
+    if  (validEmailAddress('emailcim') === true && validWebPage('url') === true 
+        && dateElement.checkValidity() === true && firstName.checkValidity() === true 
+        && lastName.checkValidity() === true)
+    {
+        buttonElement.disabled = false;
+    }
+    else
+    {
+        buttonElement.disabled = true;
+    }
+
 }
 
 function addLastModifiedDate() {
