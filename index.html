@@ -131,26 +131,34 @@
     </article>
 
     <div class="flex-box">
-        <div>Elso szoveg</div>
-        <div>Masodik szoveg</div>
+        <div id="leftDiv">Elso szoveg</div>
+        <div id="rightDiv">Masodik szoveg</div>
     </div>
 
     <form onkeyup="checkBeforeSubmit()">
+        <!-- onblur event csaladnev,keresztnev,datumnal csak a hibauzenet miatt van, burkolo fuggvenyek-->
         <label for="csaladnev">Családnév:</label>
-        <input type="text" id="csaladnev" name="csaladnev" pattern="[A-Z][a-z]+">
+        <input type="text" id="csaladnev" name="csaladnev" pattern="[A-Z][a-z]+" onblur="validFirstName()">
         <br>
         <label for="keresztnev">Keresztnév:</label>
-        <input type="text" id="keresztnev" name="keresztnev" pattern="[A-Z][a-z]+">
+        <input type="text" id="keresztnev" name="keresztnev" pattern="[A-Z][a-z]+" onblur="validLastName()">
         <br>
         <label for="szuldatum">Születési dátum:</label>
-        <input type="date" id="szuldatum" name="szuldatum">
+        <input type="date" id="szuldatum" name="szuldatum" max="2005-01-01" onblur="validDate()"> 
         <br>
         <label for="emailcim">E-mail cím:</label>
         <input type="email" id="emailcim" name="email" onblur="validEmailAddress('emailcim')"> 
         <br>
         <label for="url">Kedvenc weboldal:</label>
         <input type="url" id="url" name="url" placeholder="https://pelda.hu" onblur="validWebPage('url')">
-        <input type="button" id="buttON" name="submit" value="Submit!" disabled>
+        <br>
+        <label for="becenev">Becenév:</label>
+        <input type="text" id="becenev" name="becenev">
+        <br>
+        <label for="penz">Pénz összeg:</label>
+        <input type="number" id="penz" name="penz">
+        <br>
+        <input type="button" id="buttON" name="submit" value="Játékra fel!" disabled>
     </form>
 
 
