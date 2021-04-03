@@ -4,11 +4,10 @@
 <head>
     <title>Kerekparok</title>
     <link href="index.css" rel="stylesheet" type="text/css">
-    <script src="L02_vgim1978.js"></script>
     <meta charset="utf-8">
 </head>
 
-<body>
+<body onload="addLastModifiedDate()">
     <!-- 4. pont stilusosztaly: negyedik-->
     <h1 class="negyedik">Kerékpár típusok</h1>
 
@@ -147,10 +146,10 @@
         <input type="date" id="szuldatum" name="szuldatum">
         <br>
         <label for="emailcim">E-mail cím:</label>
-        <input type="email" id="emailcim" name="emailcim">
+        <input type="email" id="emailcim" name="email" onblur="validEmailAddress('emailcim')"> 
         <br>
         <label for="url">Kedvenc weboldal:</label>
-        <input type="url" id="url" name="url" placeholder="https://pelda.hu">
+        <input type="url" id="url" name="url" placeholder="https://pelda.hu" onblur="validWebPage('url')">
     </form>
 
 
@@ -159,7 +158,7 @@
         Készítette : Vén Gergő-Tivadar,vgim1978,524/2
     </footer>
 
-   
+    <script src="L02_vgim1978.js"></script>
 </body>
 
 </html>
