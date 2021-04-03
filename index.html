@@ -135,7 +135,7 @@
         <div>Masodik szoveg</div>
     </div>
 
-    <form>
+    <form onkeyup="checkBeforeSubmit()">
         <label for="csaladnev">Családnév:</label>
         <input type="text" id="csaladnev" name="csaladnev" pattern="[A-Z][a-z]+">
         <br>
@@ -150,6 +150,7 @@
         <br>
         <label for="url">Kedvenc weboldal:</label>
         <input type="url" id="url" name="url" placeholder="https://pelda.hu" onblur="validWebPage('url')">
+        <input type="button" id="buttON" name="submit" value="Submit!" disabled>
     </form>
 
 
