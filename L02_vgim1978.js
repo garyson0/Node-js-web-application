@@ -154,7 +154,7 @@ function startGame() {
     
     // beallit adatok, eredmenytabla
     document.getElementById("jatekosPenz").innerHTML = parseInt(penzOsszeg);
-    document.getElementById("gepPenz").innerHTML = 100;
+    document.getElementById("gepPenz").innerHTML = generateNumber(150);
     document.getElementById("penzOsszeg").innerHTML = tmp_penz;
 
 }
@@ -195,7 +195,7 @@ function selectOption(id) {
         koImg.classList.toggle('fade');
     }
 
-    enemysSelection = generateNumber();
+    enemysSelection = generateNumber(3);
     let eredmenyJelzo = document.getElementById("utolsoKor");
     let gepValasztasa = document.getElementById("gepValasztasa");
 
@@ -275,7 +275,7 @@ function selectOption(id) {
     }
 
     // penz osszegek modositasa
-    document.getElementById("jatekosPenz").innerHTML = parseInt(jatekosPenz);
+    document.getElementById("jatekosPenz").innerHTML = jatekosPenz;
     document.getElementById("gepPenz").innerHTML = gepPenz;
 
     
@@ -288,8 +288,8 @@ function selectOption(id) {
 // 2-papir
 // 3-ollo
 
-function generateNumber() {
-    let rand = Math.random() * 3;
+function generateNumber(tmp) {
+    let rand = Math.random() * tmp;
     return Math.floor(rand);
 }
 
