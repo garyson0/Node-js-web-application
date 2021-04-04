@@ -149,3 +149,31 @@ div {
     color:green;
 }
 
+/* lab2 */
+
+#utolsoKor {
+    color: red;
+    font-size: x-large;
+    font-style: oblique;
+}
+.imgGame {
+    border-radius: 50%;
+    padding: 5px;
+    height: 100px;
+    width: 100px;
+    opacity: 1;
+}
+
+.imgGame.fade {
+    opacity: 0;
+}
+.imgGame.active {
+    border-radius: 50%;
+    padding: 5px;
+    height: 100px;
+    width: 100px;
+    opacity: 1;
+}
+
+
+
