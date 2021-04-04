@@ -130,4 +130,185 @@ function addLastModifiedDate() {
     document.getElementsByTagName("footer")[0].style.textAlign = 'center';
 }
 
+function startGame() {
+    document.getElementById('jatekosInfo').style.display = 'block';
 
+    // jatekos neve label beallitas
+    let firstName = document.getElementById("formA1").elements[0].value;
+    let lastName = document.getElementById("formA1").elements[1].value;
+    let fullName = "Név: ";
+    fullName = fullName.concat(firstName);
+    fullName = fullName.concat(' ');
+    fullName = fullName.concat(lastName);
+    document.getElementById("jatekosNev").innerHTML = fullName;
+    // becenev
+    let beceNev = document.getElementById("formA1").elements[5].value;
+    let tmp = "Becenév: ";
+    tmp = tmp.concat(beceNev);
+    document.getElementById("beceNev").innerHTML = tmp;
+
+    // penz
+    let penzOsszeg = document.getElementById("formA1").elements[6].value;
+    let tmp_penz = "Pénz összeg:";
+    tmp_penz = tmp_penz.concat(penzOsszeg);
+    
+    // beallit adatok, eredmenytabla
+    document.getElementById("jatekosPenz").innerHTML = parseInt(penzOsszeg);
+    document.getElementById("gepPenz").innerHTML = 100;
+    document.getElementById("penzOsszeg").innerHTML = tmp_penz;
+
+}
+
+
+
+// onclick image event, valasztunk ko/papir/ollo kozul 
+function selectOption(id) {
+    let jatekosPenz = parseInt(document.getElementById("jatekosPenz").innerHTML);
+    let gepPenz = parseInt(document.getElementById("gepPenz").innerHTML);
+    let egyKorAra = 10;
+    if(jatekosPenz - egyKorAra < 0)
+    {
+        eredmenyJelzo.innerHTML = "Nincs elegendő pénzed!";
+        return;
+    }
+    else if(gepPenz - egyKorAra < 0)
+    {
+        eredmenyJelzo.innerHTML = "Elnyerted a gép összes pénzét!";
+        return;
+    }
+    let koImg = document.getElementById("imgKo");
+    let papirImg = document.getElementById("imgPapir");
+    let olloImg = document.getElementById("imgOllo");
+    if(id === 1)
+    {
+        papirImg.classList.toggle('fade');
+        olloImg.classList.toggle('fade');
+    }
+    else if(id === 2)
+    {
+        koImg.classList.toggle('fade');
+        olloImg.classList.toggle('fade');
+    }
+    else
+    {
+        papirImg.classList.toggle('fade');
+        koImg.classList.toggle('fade');
+    }
+
+    enemysSelection = generateNumber();
+    let eredmenyJelzo = document.getElementById("utolsoKor");
+    let gepValasztasa = document.getElementById("gepValasztasa");
+
+    // beszurando valasztasa a gepnek 
+    // ko
+    let beszurKo = document.createElement("img");
+    beszurKo.src = 'https://cdn.pixabay.com/photo/2014/12/22/00/03/rock-576669_960_720.png';
+    beszurKo.setAttribute("class","imgGame");
+
+    // papir
+    let beszurPapir = document.createElement("img");
+    beszurPapir.src = 'https://image.shutterstock.com/image-photo/white-crumpled-paper-texture-background-600w-482355415.jpg';
+    beszurPapir.setAttribute("class","imgGame");
+
+    // ollo
+    let beszurOllo = document.createElement("img");
+    beszurOllo.src = 'https://image.shutterstock.com/image-vector/scrissor-simple-icon-vector-design-600w-1523411963.jpg';
+    beszurOllo.setAttribute("class","imgGame");
+
+    
+    if(id === 1 && enemysSelection === 1)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurKo,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Döntetlen";
+    }
+    else if(id === 1 && enemysSelection === 2)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurPapir,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Gép nyert";
+        jatekosPenz -= egyKorAra;
+        gepPenz += egyKorAra;
+    }
+    else if(id === 1 && enemysSelection === 3)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurOllo,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Te nyertél!";
+        jatekosPenz += egyKorAra;
+        gepPenz -= egyKorAra;
+    }
+    else if(id === 2 && enemysSelection === 1)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurKo,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Te nyertél!";
+        jatekosPenz += egyKorAra;
+        gepPenz -= egyKorAra;
+    }
+    else if(id === 2 && enemysSelection === 2)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurPapir,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Döntetlen!";
+    }
+    else if(id === 2 && enemysSelection === 3)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurOllo,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Gép nyert!";
+        jatekosPenz -= egyKorAra;
+        gepPenz += egyKorAra;
+    }
+    else if(id === 3 && enemysSelection === 1)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurKo,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Gép nyert!";
+        jatekosPenz -= egyKorAra;
+        gepPenz += egyKorAra;
+    }
+    else if(id === 3 && enemysSelection === 2)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurPapir,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Te nyertél!";
+        jatekosPenz += egyKorAra;
+        gepPenz -= egyKorAra;
+    }
+    else if(id === 3 && enemysSelection === 3)
+    {
+        gepValasztasa.parentNode.insertBefore(beszurOllo,gepValasztasa.nextSibling); // insert after
+        eredmenyJelzo.innerHTML = "Döntetlen!";
+    }
+
+    // penz osszegek modositasa
+    document.getElementById("jatekosPenz").innerHTML = parseInt(jatekosPenz);
+    document.getElementById("gepPenz").innerHTML = gepPenz;
+
+    
+
+
+}
+
+// generaljunk 1-3 kozott egy random szamot, gepnek
+// 1-ko
+// 2-papir
+// 3-ollo
+
+function generateNumber() {
+    let rand = Math.random() * 3;
+    return Math.floor(rand);
+}
+
+function removeSiblingsAfter(tmp) {
+    let i;
+    while(i = tmp.nextSibling)
+        tmp.parentNode.removeChild(i);
+}
+function newGame() {
+    let koImg = document.getElementById("imgKo");
+    let papirImg = document.getElementById("imgPapir");
+    let olloImg = document.getElementById("imgOllo");
+    koImg.classList.toggle('active');
+    papirImg.classList.toggle('active');
+    olloImg.classList.toggle('active');
+
+    let deleteAfter = document.getElementById("gepValasztasa");
+    removeSiblingsAfter(deleteAfter);
+
+    startGame();
+
+}
