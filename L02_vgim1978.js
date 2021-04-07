@@ -165,7 +165,7 @@ function startGame() {
 function selectOption(id) {
     let jatekosPenz = parseInt(document.getElementById("jatekos-penz").innerHTML);
     let gepPenz = parseInt(document.getElementById("gep-penz").innerHTML);
-    let egyKorAra = 10;
+    const egyKorAra = 10;
     if(jatekosPenz - egyKorAra < 0)
     {
         eredmenyJelzo.innerHTML = "Nincs elegendő pénzed!";
