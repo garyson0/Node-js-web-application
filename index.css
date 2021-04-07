@@ -141,22 +141,22 @@ div {
     color: yellow;
 }
 
-#leftDiv {
+#left-div {
     color:red;
 }
 
-#rightDiv {
+#right-div {
     color:green;
 }
 
 /* lab2 */
 
-#utolsoKor {
+#utolso-kor {
     color: red;
     font-size: x-large;
     font-style: oblique;
 }
-.imgGame {
+.img-game {
     border-radius: 50%;
     padding: 5px;
     height: 100px;
@@ -164,10 +164,10 @@ div {
     opacity: 1;
 }
 
-.imgGame.fade {
+.img-game.fade {
     opacity: 0;
 }
-.imgGame.active {
+.img-game.active {
     border-radius: 50%;
     padding: 5px;
     height: 100px;
