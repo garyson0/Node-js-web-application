@@ -131,11 +131,11 @@
     </article>
 
     <div class="flex-box">
-        <div id="leftDiv">Elso szoveg</div>
-        <div id="rightDiv">Masodik szoveg</div>
+        <div id="left-div">Elso szoveg</div>
+        <div id="right-div">Masodik szoveg</div>
     </div>
 
-    <form id="formA1" onkeyup="checkBeforeSubmit()">
+    <form id="form-a1" onkeyup="checkBeforeSubmit()">
         <!-- onblur event csaladnev,keresztnev,datumnal csak a hibauzenet miatt van, burkolo fuggvenyek-->
         <label for="csaladnev">Családnév:</label>
         <input type="text" id="csaladnev" name="csaladnev" pattern="[A-Z][a-z]+" onblur="validFirstName()">
@@ -158,49 +158,49 @@
         <label for="penz">Pénz összeg:</label>
         <input type="number" id="penz" name="penz">
         <br>
-        <input type="button" id="buttON" name="submit" value="Játékra fel!" onclick="startGame()" >
+        <input type="button" id="butt-on" name="submit" value="Játékra fel!" onclick="startGame()" disabled>
     </form>
 
     
-    <div class="jatekosinfo" id="jatekosInfo">
+    <div class="jatekosinfo" id="jatekos-info">
         <h2>Játékos adatai</h2>
-        <label id="jatekosNev"></label>
+        <label id="jatekos-nev"></label>
         <br>
-        <label id="beceNev"></label>
+        <label id="bece-nev"></label>
         <br>
-        <label id="penzOsszeg"></label>
+        <label id="penz-osszeg"></label>
         <br>
     </div>
     <div class="flex-box">
-        <div class="jatekosEredmenyei">
+        <div class="jatekos-eredmenyei">
             <article>
                 <h4>Játékos</h4>
-                Pénz:<p id="jatekosPenz"></p>
+                Pénz:<p id="jatekos-penz"></p>
             </article>
 
         </div>
-        <div class="gepEredmenyei">
+        <div class="gep-eredmenyei">
             <h4>Gép</h4>
             <article>
                 <h4>Gép</h4>
-                Pénz:<p id="gepPenz"></p>
+                Pénz:<p id="gep-penz"></p>
             </article>
         </div>
-        <h4 id="utolsoKor">eredmény jelzés itt</h4>
+        <h4 id="utolso-kor">eredmény jelzés itt</h4>
     </div>
     <div class="flex-box" id="gamediv">
-        <img src="https://cdn.pixabay.com/photo/2014/12/22/00/03/rock-576669_960_720.png" id="imgKo" alt="ko_img" class="imgGame" onclick="selectOption(1)">
-        <img src="https://image.shutterstock.com/image-photo/white-crumpled-paper-texture-background-600w-482355415.jpg" id="imgPapir" alt="papir_img" class="imgGame" onclick="selectOption(2)">
-        <img src="https://image.shutterstock.com/image-vector/scrissor-simple-icon-vector-design-600w-1523411963.jpg" id="imgOllo" alt="ollo_img" class="imgGame" onclick="selectOption(3)">
-        <button type="button" id="newGame" onclick="newGame()">Új játék</button>
+        <img src="https://cdn.pixabay.com/photo/2014/12/22/00/03/rock-576669_960_720.png" id="img-ko" alt="ko_img" class="img-game" onclick="selectOption(1)">
+        <img src="https://image.shutterstock.com/image-photo/white-crumpled-paper-texture-background-600w-482355415.jpg" id="img-papir" alt="papir_img" class="img-game" onclick="selectOption(2)">
+        <img src="https://image.shutterstock.com/image-vector/scrissor-simple-icon-vector-design-600w-1523411963.jpg" id="img-ollo" alt="ollo_img" class="img-game" onclick="selectOption(3)">
+        <button type="button" id="new-game" onclick="newGame()">Új játék</button>
         <div>
-            <p id="gepValasztasa">Gép választása:</p>
+            <p id="gep-valasztasa">Gép választása:</p>
         </div>
     </div>
 
 
     <!-- 4. pont stilusosztaly: negyedik-->
-    <footer class="negyedik">
+    <footer id="footer-shooter"class="negyedik">
         Készítette : Vén Gergő-Tivadar,vgim1978,524/2
     </footer>
     <script src="L02_vgim1978.js"></script>
