@@ -126,7 +126,7 @@ function checkBeforeSubmit() {
 
 function addLastModifiedDate() {
     let time = document.lastModified;
-    document.getElementById("footer-shooter")innerText = time;
+    document.getElementById("footer-shooter").innerText = time;
     document.getElementById("footer-shooter").style.textAlign = 'center';
 }
 
@@ -165,6 +165,7 @@ function startGame() {
 function selectOption(id) {
     let jatekosPenz = parseInt(document.getElementById("jatekos-penz").innerHTML);
     let gepPenz = parseInt(document.getElementById("gep-penz").innerHTML);
+    let eredmenyJelzo = document.getElementById("utolso-kor");
     const egyKorAra = 10;
     if(jatekosPenz - egyKorAra < 0)
     {
@@ -196,7 +197,6 @@ function selectOption(id) {
     }
 
     enemysSelection = generateNumber(3);
-    let eredmenyJelzo = document.getElementById("utolso-kor");
     let gepValasztasa = document.getElementById("gep-valasztasa");
 
     // beszurando valasztasa a gepnek 
@@ -278,8 +278,6 @@ function selectOption(id) {
     document.getElementById("jatekos-penz").innerHTML = jatekosPenz;
     document.getElementById("gep-penz").innerHTML = gepPenz;
 
-    
-
 
 }
 
@@ -302,13 +300,15 @@ function newGame() {
     let koImg = document.getElementById("img-ko");
     let papirImg = document.getElementById("img-papir");
     let olloImg = document.getElementById("img-ollo");
+
+    
     koImg.classList.toggle('active');
     papirImg.classList.toggle('active');
     olloImg.classList.toggle('active');
-
+    
     let deleteAfter = document.getElementById("gep-valasztasa");
     removeSiblingsAfter(deleteAfter);
 
-    startGame();
+    //startGame();
 
 }
