@@ -1,15 +1,15 @@
 // beepitett checkValidity fuggveny burkolo fuggvenye
 function validDate() {
     let dateElement = document.getElementById("szuldatum");
-    if(document.getElementById("errorMessageDate"))
+    if(document.getElementById("error-message-date"))
     {
-        document.getElementById("errorMessageDate").remove();
+        document.getElementById("error-message-date").remove();
     }
     if(dateElement.checkValidity() === false)
     {
-        let buttonElement = document.getElementById("buttON");
+        let buttonElement = document.getElementById("butt-on");
         let errorMessageElement = document.createElement("p");
-        errorMessageElement.id = "errorMessageDate";
+        errorMessageElement.id = "error-message-date";
         errorMessageElement.innerText = "Hibas datum!";
         errorMessageElement.style.color = "red";
         dateElement.parentNode.insertBefore(errorMessageElement,dateElement.nextSibling); // insert after
@@ -23,14 +23,14 @@ function validDate() {
 // beepitett checkValidity fuggveny burkolo fuggvenye
 function validFirstName() {
     let firtNameElement = document.getElementById("csaladnev");
-    if(document.getElementById("errorMessageFirstName"))
+    if(document.getElementById("error-message-first-name"))
     {
-        document.getElementById("errorMessageFirstName").remove();
+        document.getElementById("error-message-first-name").remove();
     }
     if(firtNameElement.checkValidity() === false)
     {
         let errorMessageElement = document.createElement("p");
-        errorMessageElement.id = "errorMessageFirstName";
+        errorMessageElement.id = "error-message-first-name";
         errorMessageElement.innerText = "Hibas csaladnev!";
         errorMessageElement.style.color = "red";
         firtNameElement.parentNode.insertBefore(errorMessageElement,firtNameElement.nextSibling); // insert after
@@ -44,14 +44,14 @@ function validFirstName() {
 // beepitett checkValidity fuggveny burkolo fuggvenye
 function validLastName() {
     let lastNameElement = document.getElementById("keresztnev");
-    if(document.getElementById("errorMessageLastName"))
+    if(document.getElementById("error-message-last-name"))
     {
-        document.getElementById("errorMessageLastName").remove();
+        document.getElementById("error-message-last-name").remove();
     }
     if(lastNameElement.checkValidity() === false)
     {
         let errorMessageElement = document.createElement("p");
-        errorMessageElement.id = "errorMessageLastName";
+        errorMessageElement.id = "error-message-last-name";
         errorMessageElement.innerText = "Hibas keresztnev!";
         errorMessageElement.style.color = "red";
         lastNameElement.parentNode.insertBefore(errorMessageElement,lastNameElement.nextSibling); // insert after
@@ -64,16 +64,16 @@ function validLastName() {
 
 // email cim ellenorzes
 function validEmailAddress(email) {
-    const emailPattern = /^[A-Za-z0-9_]+(@yahoo|@gmail)\.(com)$/;
+    const emailPattern = /^[A-Za-z0-9_.]+(@yahoo|@gmail)\.(com)$/;
     let elem = document.getElementById(email);
-    if(document.getElementById("hibasEmail"))
+    if(document.getElementById("hibas-email"))
     {
-        document.getElementById("hibasEmail").remove();
+        document.getElementById("hibas-email").remove();
     }   
     if (!elem.value.match(emailPattern))
     {
         let hibaEmail = document.createElement("p");
-        hibaEmail.id = "hibasEmail"
+        hibaEmail.id = "hibas-email"
         hibaEmail.innerText = "Hibas e-mail cim!";
         hibaEmail.style.color = "red";
         elem.parentNode.insertBefore(hibaEmail,elem.nextSibling); //insert after
@@ -88,14 +88,14 @@ function validWebPage(url) {
     // minta: http(s)://(subdomain).(domain).(com/hu/etc)
     const webPagePattern = /^(http|https):\/\/([a-zA-Z0-9-_]+)\.([a-zA-Z0-9-_]+)\.([a-z]+)$/;
     let elem = document.getElementById(url);
-    if(document.getElementById("hibasWeboldal"))
+    if(document.getElementById("hibas-weboldal"))
     {
-        document.getElementById("hibasWeboldal").remove();
+        document.getElementById("hibas-weboldal").remove();
     }   
     if (!elem.value.match(webPagePattern))
     {
         let hibaWeboldal = document.createElement("p");
-        hibaWeboldal.id = "hibasWeboldal"
+        hibaWeboldal.id = "hibas-weboldal"
         hibaWeboldal.innerText = "Hibas weboldal!";
         hibaWeboldal.style.color = "red";
         elem.parentNode.insertBefore(hibaWeboldal,elem.nextSibling); //insert after
@@ -107,7 +107,7 @@ function validWebPage(url) {
 }
 
 function checkBeforeSubmit() {
-    let buttonElement = document.getElementById("buttON");
+    let buttonElement = document.getElementById("butt-on");
     let dateElement = document.getElementById("szuldatum");
     let firstName = document.getElementById("csaladnev");
     let lastName = document.getElementById("keresztnev");
@@ -126,36 +126,36 @@ function checkBeforeSubmit() {
 
 function addLastModifiedDate() {
     let time = document.lastModified;
-    document.getElementsByTagName("footer")[0].innerText = time;
-    document.getElementsByTagName("footer")[0].style.textAlign = 'center';
+    document.getElementById("footer-shooter")innerText = time;
+    document.getElementById("footer-shooter").style.textAlign = 'center';
 }
 
 function startGame() {
-    document.getElementById('jatekosInfo').style.display = 'block';
+    document.getElementById('jatekos-info').style.display = 'block';
 
     // jatekos neve label beallitas
-    let firstName = document.getElementById("formA1").elements[0].value;
-    let lastName = document.getElementById("formA1").elements[1].value;
+    let firstName = document.getElementById("form-a1").elements[0].value;
+    let lastName = document.getElementById("form-a1").elements[1].value;
     let fullName = "Név: ";
     fullName = fullName.concat(firstName);
     fullName = fullName.concat(' ');
     fullName = fullName.concat(lastName);
-    document.getElementById("jatekosNev").innerHTML = fullName;
+    document.getElementById("jatekos-nev").innerHTML = fullName;
     // becenev
-    let beceNev = document.getElementById("formA1").elements[5].value;
+    let beceNev = document.getElementById("form-a1").elements[5].value;
     let tmp = "Becenév: ";
     tmp = tmp.concat(beceNev);
-    document.getElementById("beceNev").innerHTML = tmp;
+    document.getElementById("bece-nev").innerHTML = tmp;
 
     // penz
-    let penzOsszeg = document.getElementById("formA1").elements[6].value;
+    let penzOsszeg = document.getElementById("form-a1").elements[6].value;
     let tmp_penz = "Pénz összeg:";
     tmp_penz = tmp_penz.concat(penzOsszeg);
     
     // beallit adatok, eredmenytabla
-    document.getElementById("jatekosPenz").innerHTML = parseInt(penzOsszeg);
-    document.getElementById("gepPenz").innerHTML = generateNumber(150);
-    document.getElementById("penzOsszeg").innerHTML = tmp_penz;
+    document.getElementById("jatekos-penz").innerHTML = parseInt(penzOsszeg);
+    document.getElementById("gep-penz").innerHTML = generateNumber(150);
+    document.getElementById("penz-osszeg").innerHTML = tmp_penz;
 
 }
 
@@ -163,8 +163,8 @@ function startGame() {
 
 // onclick image event, valasztunk ko/papir/ollo kozul 
 function selectOption(id) {
-    let jatekosPenz = parseInt(document.getElementById("jatekosPenz").innerHTML);
-    let gepPenz = parseInt(document.getElementById("gepPenz").innerHTML);
+    let jatekosPenz = parseInt(document.getElementById("jatekos-penz").innerHTML);
+    let gepPenz = parseInt(document.getElementById("gep-penz").innerHTML);
     let egyKorAra = 10;
     if(jatekosPenz - egyKorAra < 0)
     {
@@ -176,9 +176,9 @@ function selectOption(id) {
         eredmenyJelzo.innerHTML = "Elnyerted a gép összes pénzét!";
         return;
     }
-    let koImg = document.getElementById("imgKo");
-    let papirImg = document.getElementById("imgPapir");
-    let olloImg = document.getElementById("imgOllo");
+    let koImg = document.getElementById("img-ko");
+    let papirImg = document.getElementById("img-papir");
+    let olloImg = document.getElementById("img-ollo");
     if(id === 1)
     {
         papirImg.classList.toggle('fade');
@@ -196,24 +196,24 @@ function selectOption(id) {
     }
 
     enemysSelection = generateNumber(3);
-    let eredmenyJelzo = document.getElementById("utolsoKor");
-    let gepValasztasa = document.getElementById("gepValasztasa");
+    let eredmenyJelzo = document.getElementById("utolso-kor");
+    let gepValasztasa = document.getElementById("gep-valasztasa");
 
     // beszurando valasztasa a gepnek 
     // ko
     let beszurKo = document.createElement("img");
     beszurKo.src = 'https://cdn.pixabay.com/photo/2014/12/22/00/03/rock-576669_960_720.png';
-    beszurKo.setAttribute("class","imgGame");
+    beszurKo.setAttribute("class","img-game");
 
     // papir
     let beszurPapir = document.createElement("img");
     beszurPapir.src = 'https://image.shutterstock.com/image-photo/white-crumpled-paper-texture-background-600w-482355415.jpg';
-    beszurPapir.setAttribute("class","imgGame");
+    beszurPapir.setAttribute("class","img-game");
 
     // ollo
     let beszurOllo = document.createElement("img");
     beszurOllo.src = 'https://image.shutterstock.com/image-vector/scrissor-simple-icon-vector-design-600w-1523411963.jpg';
-    beszurOllo.setAttribute("class","imgGame");
+    beszurOllo.setAttribute("class","img-game");
 
     
     if(id === 1 && enemysSelection === 1)
@@ -275,8 +275,8 @@ function selectOption(id) {
     }
 
     // penz osszegek modositasa
-    document.getElementById("jatekosPenz").innerHTML = jatekosPenz;
-    document.getElementById("gepPenz").innerHTML = gepPenz;
+    document.getElementById("jatekos-penz").innerHTML = jatekosPenz;
+    document.getElementById("gep-penz").innerHTML = gepPenz;
 
     
 
@@ -299,14 +299,14 @@ function removeSiblingsAfter(tmp) {
         tmp.parentNode.removeChild(i);
 }
 function newGame() {
-    let koImg = document.getElementById("imgKo");
-    let papirImg = document.getElementById("imgPapir");
-    let olloImg = document.getElementById("imgOllo");
+    let koImg = document.getElementById("img-ko");
+    let papirImg = document.getElementById("img-papir");
+    let olloImg = document.getElementById("img-ollo");
     koImg.classList.toggle('active');
     papirImg.classList.toggle('active');
     olloImg.classList.toggle('active');
 
-    let deleteAfter = document.getElementById("gepValasztasa");
+    let deleteAfter = document.getElementById("gep-valasztasa");
     removeSiblingsAfter(deleteAfter);
 
     startGame();
