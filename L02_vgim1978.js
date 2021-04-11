@@ -111,9 +111,11 @@ function checkBeforeSubmit() {
     let dateElement = document.getElementById("szuldatum");
     let firstName = document.getElementById("csaladnev");
     let lastName = document.getElementById("keresztnev");
+    let nickName = document.getElementById("becenev");
+    let moneyForGame = document.getElementById("penz");
     if  (validEmailAddress('emailcim') === true && validWebPage('url') === true 
         && dateElement.checkValidity() === true && firstName.checkValidity() === true 
-        && lastName.checkValidity() === true)
+        && lastName.checkValidity() === true && nickName.checkValidity() === true && moneyForGame.checkValidity() === true)
     {
         buttonElement.disabled = false;
     }
