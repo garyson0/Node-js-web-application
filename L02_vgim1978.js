@@ -106,6 +106,8 @@ function validWebPage(url) {
     return true;
 }
 
+// changes
+
 function checkBeforeSubmit() {
     let buttonElement = document.getElementById("butt-on");
     let dateElement = document.getElementById("szuldatum");
