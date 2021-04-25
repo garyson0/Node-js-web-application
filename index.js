@@ -38,8 +38,23 @@ function exists_value_at_given_pos(value,array,pos)
     return false;
 }
 
+function student_already_joined(studentid,array,classid)
+{
+    
+    for(let i = 0; i < array.length; i++)
+    {
+        if(array[i][0] == classid && array[i][1] == studentid)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 let targyak = []
-//targykod,targyneve,targyevfolyam,kurzusokszama,szeminariumokszama,laborokszama
+let targyak_diakjai = []
+// I. form: uj tantargy
 app.post('/classinfos', (req,resp) => {
     //validalas
     let tmp_targy = []
@@ -102,7 +117,7 @@ app.post('/classinfos', (req,resp) => {
         tmp_targy.push(laborokszama);
 
         targyak.push(tmp_targy);
-        resp.redirect('/tantargy.html');
+        resp.status(200).send('Tárgy sikeresen hozzáadva!');
         //console.log(targyak);
     }
     
@@ -110,7 +125,7 @@ app.post('/classinfos', (req,resp) => {
 
 });
 
-//formban megadott tantargyID almappaba helyezi a filekat, ha letezik a tantargy
+//II. formban megadott tantargyID almappaba helyezi a filekat, ha letezik a tantargy
 app.post('/classfiles', (req,resp) => {
 
     const form = new formidable.IncomingForm();
@@ -120,24 +135,50 @@ app.post('/classfiles', (req,resp) => {
         
         if(!exists_value_at_given_pos(targykod,targyak,0))
         {
-            return resp.send("Sikertelen feltöltés, nem létező tantárgy!");
+            return resp.status(400).send("Sikertelen feltöltés, nem létező tantárgy!");
         }
         else
         {
             let regiUtvonal = files.targyfilek.path;
             let newDir = uploadDir + `/${targykod}/`;
             let ujUtvonal = uploadDir + `/${targykod}/` + files.targyfilek.name;
-            let nyerAdat = fs.readFileSync(regiUtvonal);
+            let nyersAdat = fs.readFileSync(regiUtvonal);
             if(!fs.existsSync(newDir)){
                 fs.mkdirSync(newDir);
             }
-            fs.writeFile(ujUtvonal, nyerAdat, (err) => {
+            fs.writeFile(ujUtvonal, nyersAdat, (err) => {
                 if(err) console.log(err);
-                return resp.send("Sikeres feltöltés!");
+                return resp.status(200).send("Sikeres feltöltés!");
             });
         }
         
     });
+
+});
+
+//III. form : diák csatlakozása adott tárgyhoz
+app.post('/classjoin', (req,resp) => {
+    let targykod = JSON.stringify(req.body.targykodcsatlakoz);
+    targykod = targykod.replace(/"([^"]+(?="))"/g, '$1');
+    targykod = parseInt(targykod);
+
+    let diakkod = JSON.stringify(req.body.diakkod);
+    diakkod = diakkod.replace(/"([^"]+(?="))"/g, '$1');
+    diakkod = parseInt(diakkod);
+
+    if(targykod <= 0 || !exists_value_at_given_pos(targykod,targyak,0))
+    {
+        resp.status(400).send("Nem megfelelő adatok: pozitív, illetve létező tantárgy kódja kell legyen!");
+    }
+    if(diakkod <= 0 || student_already_joined(diakkod,targyak_diakjai,targykod))
+    {
+        resp.status(400).send("Nem megfelelő adatok: pozitív, illetve olyan tárgyhoz csatlakozhat, ahova még nem csatlakozott!");
+    }
+    else
+    {
+        resp.status(200).send("Diák sikeresen hozzáadva a tárgyhoz!");
+    }
+
 
 });
 
