@@ -1,3 +1,4 @@
+# new
 # node_modules, if in subfolder, is not ignored
 node_modules/
 bower_components/
