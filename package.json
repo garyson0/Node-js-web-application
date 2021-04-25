@@ -1,0 +1,27 @@
+{
+  "name": "lab-vgim1978",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ubb-webprog/labs2021/lab-vgim1978.git"
+  },
+  "author": "Ven Gergo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/ubb-webprog/labs2021/lab-vgim1978/issues"
+  },
+  "homepage": "https://gitlab.com/ubb-webprog/labs2021/lab-vgim1978#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}
