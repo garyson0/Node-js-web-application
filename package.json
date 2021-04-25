@@ -19,7 +19,10 @@
   "homepage": "https://gitlab.com/ubb-webprog/labs2021/lab-vgim1978#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "express-formidable": "^1.2.0"
+    "express-formidable": "^1.2.0",
+    "formidable": "^1.2.2",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
