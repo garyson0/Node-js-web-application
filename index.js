@@ -1,8 +1,17 @@
 import express, { response } from 'express'
 import morgan from 'morgan'
+import formidable from 'formidable'
+import fs from 'fs'
+import path from 'path'
+
 
 const app = express();
+const uploadDir = path.join(process.cwd(), 'uploadDir');
 const port = 5000;
+
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+  }
 
 app.use(morgan('tiny'));
 
@@ -93,11 +102,42 @@ app.post('/classinfos', (req,resp) => {
         tmp_targy.push(laborokszama);
 
         targyak.push(tmp_targy);
-        resp.redirect('/');
+        resp.redirect('/tantargy.html');
         //console.log(targyak);
     }
     
 
+
+});
+
+//formban megadott tantargyID almappaba helyezi a filekat, ha letezik a tantargy
+app.post('/classfiles', (req,resp) => {
+
+    const form = new formidable.IncomingForm();
+    form.parse(req, (err,fields,files) => {
+        let targykod = JSON.stringify(fields.targykod1);
+        targykod = targykod.replace(/"([^"]+(?="))"/g, '$1');
+        
+        if(!exists_value_at_given_pos(targykod,targyak,0))
+        {
+            return resp.send("Sikertelen feltöltés, nem létező tantárgy!");
+        }
+        else
+        {
+            let regiUtvonal = files.targyfilek.path;
+            let newDir = uploadDir + `/${targykod}/`;
+            let ujUtvonal = uploadDir + `/${targykod}/` + files.targyfilek.name;
+            let nyerAdat = fs.readFileSync(regiUtvonal);
+            if(!fs.existsSync(newDir)){
+                fs.mkdirSync(newDir);
+            }
+            fs.writeFile(ujUtvonal, nyerAdat, (err) => {
+                if(err) console.log(err);
+                return resp.send("Sikeres feltöltés!");
+            });
+        }
+        
+    });
 
 });
 
