@@ -83,32 +83,25 @@ app.post('/classinfos', (req,resp) => {
     laborokszama = parseInt(laborokszama);
 
 
-    if(targykod <= 0 || exists_value_at_given_pos(targykod,targyak,0))
+    if (targykod <= 0 || exists_value_at_given_pos(targykod,targyak,0))
     {
         resp.status(400).send('Hibas targykod, vagy mar letezik!');
-    }    
-    else if(! targyneve.match(namePattern))
+    }else if (!targyneve.match(namePattern))
     {
         resp.status(400).send('Hibas targynev!');
-    }    
-    else if(targyevfolyam < 1 || targyevfolyam > 3)
+    }else if (targyevfolyam < 1 || targyevfolyam > 3)
     {
         resp.status(400).send('Hibas evfolyam!');
-    }  
-    else if(kurzusokszama < 7)
+    }else if (kurzusokszama < 7)
     {
         resp.status(400).send('Kurzusok szama nem megfelelo!');
-    }
-    else if(szeminariumokszama < 7)
+    }else if (szeminariumokszama < 7)
     {
         resp.status(400).send('Szeminariumok szama nem megfelelo!');
-    }
-    else if(laborokszama < 7)    
+    }else if (laborokszama < 7)    
     {
         resp.status(400).send('Laborok szama nem megfelelo!');
-    }
-    else 
-    {
+    }else {
         tmp_targy.push(targykod);
         tmp_targy.push(targyneve);
         tmp_targy.push(targyevfolyam);
@@ -120,8 +113,6 @@ app.post('/classinfos', (req,resp) => {
         resp.status(200).send('Tárgy sikeresen hozzáadva!');
         //console.log(targyak);
     }
-    
-
 
 });
 
@@ -133,21 +124,19 @@ app.post('/classfiles', (req,resp) => {
         let targykod = JSON.stringify(fields.targykod1);
         targykod = targykod.replace(/"([^"]+(?="))"/g, '$1');
         
-        if(!exists_value_at_given_pos(targykod,targyak,0))
+        if (!exists_value_at_given_pos(targykod,targyak,0))
         {
             return resp.status(400).send("Sikertelen feltöltés, nem létező tantárgy!");
-        }
-        else
-        {
+        }else {
             let regiUtvonal = files.targyfilek.path;
             let newDir = uploadDir + `/${targykod}/`;
             let ujUtvonal = uploadDir + `/${targykod}/` + files.targyfilek.name;
             let nyersAdat = fs.readFileSync(regiUtvonal);
-            if(!fs.existsSync(newDir)){
+            if (!fs.existsSync(newDir)){
                 fs.mkdirSync(newDir);
             }
             fs.writeFile(ujUtvonal, nyersAdat, (err) => {
-                if(err) console.log(err);
+                if (err) console.log(err);
                 return resp.status(200).send("Sikeres feltöltés!");
             });
         }
@@ -166,16 +155,14 @@ app.post('/classjoin', (req,resp) => {
     diakkod = diakkod.replace(/"([^"]+(?="))"/g, '$1');
     diakkod = parseInt(diakkod);
 
-    if(targykod <= 0 || !exists_value_at_given_pos(targykod,targyak,0))
+    if (targykod <= 0 || !exists_value_at_given_pos(targykod,targyak,0))
     {
         resp.status(400).send("Nem megfelelő adatok: pozitív, illetve létező tantárgy kódja kell legyen!");
     }
-    if(diakkod <= 0 || student_already_joined(diakkod,targyak_diakjai,targykod))
+    if (diakkod <= 0 || student_already_joined(diakkod,targyak_diakjai,targykod))
     {
         resp.status(400).send("Nem megfelelő adatok: pozitív, illetve olyan tárgyhoz csatlakozhat, ahova még nem csatlakozott!");
-    }
-    else
-    {
+    } else {
         resp.status(200).send("Diák sikeresen hozzáadva a tárgyhoz!");
     }
 
