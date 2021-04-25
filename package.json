@@ -18,7 +18,8 @@
   },
   "homepage": "https://gitlab.com/ubb-webprog/labs2021/lab-vgim1978#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-formidable": "^1.2.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
