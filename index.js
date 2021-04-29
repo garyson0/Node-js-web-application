@@ -1,11 +1,6 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-shadow */
-/* eslint-disable no-plusplus */
-/* eslint-disable complexity */
-/* eslint-disable radix */
 import express from 'express';
 import morgan from 'morgan';
-import formidable from 'formidable';
+import eformidable from 'express-formidable';
 import fs from 'fs';
 import path from 'path';
 
@@ -23,72 +18,36 @@ app.use(express.static('static'));
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/hello', (req, resp) => {
-  resp.send('Hello world!');
-});
-
-function existsValueAtGivePos(value, array, pos) {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i][pos] === value) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function studentAlreadyJoined(studentid, array, classid) {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i][0] === classid && array[i][1] === studentid) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 const targyak = [];
-const targyakDiakjai = [];
+const targyakDiakjai = {};
 // I. form: uj tantargy
 app.post('/classinfos', (req, resp) => {
-  // validalas
   const tmpTargy = [];
   const namePattern = /^[A-Z][a-z0-9]+$/;
-  let targykod = JSON.stringify(req.body.targykod);
-  targykod = targykod.replace(/"([^"]+(?="))"/g, '$1');
-  targykod = parseInt(targykod);
+  let targykod = (req.body.targykod).toString();
+  targykod = parseInt(targykod, 10);
 
-  let targyneve = JSON.stringify(req.body.targyneve);
-  targyneve = targyneve.replace(/"([^"]+(?="))"/g, '$1');
+  const targyneve = (req.body.targyneve).toString();
 
-  let targyevfolyam = JSON.stringify(req.body.targyevfolyam);
-  targyevfolyam = targyevfolyam.replace(/"([^"]+(?="))"/g, '$1');
-  targyevfolyam = parseInt(targyevfolyam);
+  let targyevfolyam = (req.body.targyevfolyam).toString();
+  targyevfolyam = parseInt(targyevfolyam, 10);
 
-  let kurzusokszama = JSON.stringify(req.body.kurzusokszama);
-  kurzusokszama = kurzusokszama.replace(/"([^"]+(?="))"/g, '$1');
-  kurzusokszama = parseInt(kurzusokszama);
+  let kurzusokszama = (req.body.kurzusokszama).toString();
+  kurzusokszama = parseInt(kurzusokszama, 10);
 
-  let szeminariumokszama = JSON.stringify(req.body.szeminariumokszama);
-  szeminariumokszama = szeminariumokszama.replace(/"([^"]+(?="))"/g, '$1');
-  szeminariumokszama = parseInt(szeminariumokszama);
+  let szeminariumokszama = (req.body.szeminariumokszama).toString();
+  szeminariumokszama = parseInt(szeminariumokszama, 10);
 
-  let laborokszama = JSON.stringify(req.body.laborokszama);
-  laborokszama = laborokszama.replace(/"([^"]+(?="))"/g, '$1');
-  laborokszama = parseInt(laborokszama);
+  let laborokszama = (req.body.laborokszama).toString();
+  laborokszama = parseInt(laborokszama, 10);
 
-  if (targykod <= 0 || existsValueAtGivePos(targykod, targyak, 0)) {
-    resp.status(400).send('Hibas targykod, vagy mar letezik!');
-  } else if (!targyneve.match(namePattern)) {
-    resp.status(400).send('Hibas targynev!');
-  } else if (targyevfolyam < 1 || targyevfolyam > 3) {
+  const checkTargy = targykod <= 0 || (targyak.find((elem) => elem[0] === targykod)) !== undefined;
+  const checkEvfolyam = targyevfolyam < 1 || targyevfolyam > 3;
+
+  if (!checkTargy || !targyneve.match(namePattern)) {
+    resp.status(400).send('Hibas targykod/nev, vagy mar letezik!');
+  } else if (!checkEvfolyam) {
     resp.status(400).send('Hibas evfolyam!');
-  } else if (kurzusokszama < 7) {
-    resp.status(400).send('Kurzusok szama nem megfelelo!');
-  } else if (szeminariumokszama < 7) {
-    resp.status(400).send('Szeminariumok szama nem megfelelo!');
-  } else if (laborokszama < 7) {
-    resp.status(400).send('Laborok szama nem megfelelo!');
   } else {
     tmpTargy.push(targykod);
     tmpTargy.push(targyneve);
@@ -96,55 +55,80 @@ app.post('/classinfos', (req, resp) => {
     tmpTargy.push(kurzusokszama);
     tmpTargy.push(szeminariumokszama);
     tmpTargy.push(laborokszama);
-
     targyak.push(tmpTargy);
+    targyakDiakjai[targykod] = [];
+
     resp.status(200).send('Tárgy sikeresen hozzáadva!');
-    // console.log(targyak);
   }
-});
-
-// II. formban megadott tantargyID almappaba helyezi a filekat, ha letezik a tantargy
-app.post('/classfiles', (req, resp) => {
-  const form = new formidable.IncomingForm();
-  form.parse(req, (err, fields, files) => {
-    let targykod = JSON.stringify(fields.targykod1);
-    targykod = targykod.replace(/"([^"]+(?="))"/g, '$1');
-
-    if (!existsValueAtGivePos(targykod, targyak, 0)) {
-      return resp.status(400).send('Sikertelen feltöltés, nem létező tantárgy!');
-    }
-    const regiUtvonal = files.targyfilek.path;
-    const newDir = `${uploadDir}/${targykod}/`;
-    const ujUtvonal = `${uploadDir}/${targykod}/${files.targyfilek.name}`;
-    const nyersAdat = fs.readFileSync(regiUtvonal);
-    if (!fs.existsSync(newDir)) {
-      fs.mkdirSync(newDir);
-    }
-    fs.writeFile(ujUtvonal, nyersAdat, (err) => {
-      if (err) console.log(err);
-      return resp.status(200).send('Sikeres feltöltés!');
-    });
-  });
 });
 
 // III. form : diák csatlakozása adott tárgyhoz
 app.post('/classjoin', (req, resp) => {
-  let targykod = JSON.stringify(req.body.targykodcsatlakoz);
-  targykod = targykod.replace(/"([^"]+(?="))"/g, '$1');
-  targykod = parseInt(targykod);
+  console.log('beleptem');
+  let targykod = (req.body.targykodcsatlakoz).toString();
+  targykod = parseInt(targykod, 10);
 
-  let diakkod = JSON.stringify(req.body.diakkod);
-  diakkod = diakkod.replace(/"([^"]+(?="))"/g, '$1');
-  diakkod = parseInt(diakkod);
+  let diakkod = (req.body.diakkod).toString();
+  diakkod = parseInt(diakkod, 10);
 
-  if (targykod <= 0 || !existsValueAtGivePos(targykod, targyak, 0)) {
+  const checkTargyLetezik = targyak.find((elem) => elem[0] === targykod);
+  if (targykod <= 0 || checkTargyLetezik === undefined) {
     resp.status(400).send('Nem megfelelő adatok: pozitív, illetve létező tantárgy kódja kell legyen!');
   }
-  if (diakkod <= 0 || studentAlreadyJoined(diakkod, targyakDiakjai, targykod)) {
+
+  const checkDiak = targyakDiakjai[targykod].find((elem) => elem === diakkod);
+  if (diakkod <= 0 || checkDiak !== undefined) {
     resp.status(400).send('Nem megfelelő adatok: pozitív, illetve olyan tárgyhoz csatlakozhat, ahova még nem csatlakozott!');
   } else {
+    targyakDiakjai[targykod].push(diakkod);
     resp.status(200).send('Diák sikeresen hozzáadva a tárgyhoz!');
   }
+});
+
+// IV.form: diák kilépése adott tárgyból
+app.post('/classleave', (req, resp) => {
+  let targykod = (req.body.targykodkilep).toString();
+  targykod = parseInt(targykod, 10);
+
+  let diakkod = (req.body.diakkodkilep).toString();
+  diakkod = parseInt(diakkod, 10);
+
+  const checkTargyLetezik = targyak.find((elem) => elem[0] === targykod);
+  if (targykod <= 0 || checkTargyLetezik === undefined) {
+    resp.status(400).send('Nem megfelelő adatok: pozitív, illetve létező tantárgy kódja kell legyen!');
+  }
+  const checkDiak = targyakDiakjai[targykod].find((elem) => elem === diakkod);
+  if (diakkod <= 0 || checkDiak === undefined) {
+    resp.status(400).send('Nem megfelelő adatok: pozitív, illetve olyan tárgyból léphet ki, amelyhez tartozik!');
+  } else {
+    resp.status(200).send('Diák sikeresen kilépve a tárgyból!');
+  }
+});
+
+app.use(eformidable({ uploadDir }));
+// II. formban megadott tantargyID almappaba helyezi a filekat, ha letezik a tantargy
+app.post('/classfiles', (req, resp) => {
+  let targykod = (req.fields.targykod1).toString();
+  targykod = parseInt(targykod, 10);
+
+  const checkTargyLetezik = targyak.find((elem) => elem[0] === targykod);
+  if (checkTargyLetezik === undefined) {
+    return resp.status(400).send('Sikertelen feltöltés, nem létező tantárgy!');
+  }
+  const regiUtvonal = req.files.targyfilek.path;
+  const newDir = `${uploadDir}/${targykod}/`;
+  const ujUtvonal = `${uploadDir}/${targykod}/${req.files.targyfilek.name}`;
+  if (!fs.existsSync(newDir)) {
+    fs.mkdirSync(newDir);
+  }
+
+  fs.copyFile(regiUtvonal, ujUtvonal, (err) => {
+    if (err) return resp.status(400).send('Sikertelen fájl másolás!');
+    resp.status(200).send('Sikeres feltöltés!');
+    return undefined;
+  });
+
+  return undefined;
 });
 
 app.listen(port, () => {
