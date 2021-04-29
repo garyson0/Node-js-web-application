@@ -1,0 +1,16 @@
+div
+{
+  border: 1px solid black;
+}
+
+#left
+{
+  float: left;
+  width: 49%;
+}
+
+#right
+{
+  float: right;
+  width: 50%;
+}
