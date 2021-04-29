@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diák csatlakozása adott tárgyhoz</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Diák csatlakozása/kilése adott tárgyhoz/ból</title>
 </head>
 <body>
     <nav>
@@ -12,14 +13,27 @@
         <a href="eroforras.html">Erőforrás-állomány feltöltése(tanároknak)</a>
     </nav>
     <main>
-        <h1>Diák csatlakozása adott tárgyhoz</h1>
-        <form id="form-diakcsatlakoz" method="POST" action="/classjoin" >
-            <label>Tantárgy kód: </label>
-            <input type="number" name="targykodcsatlakoz" min="1" required> <br>
-            <label>Diák felhasználó ID-ja: </label>
-            <input type="number" name="diakkod" required> <br>
-            <input type="submit" value="Csatlakozás!"> <br>
-        </form>
+        <div id="left">
+            <h1>Diák csatlakozása adott tárgyhoz</h1>
+            <form id="form-diakcsatlakoz" method="POST" action="/classjoin" >
+                <label>Tantárgy kód: </label>
+                <input type="number" name="targykodcsatlakoz" min="1" required> <br>
+                <label>Diák felhasználó ID-ja: </label>
+                <input type="number" name="diakkod" required> <br>
+                <input type="submit" value="Csatlakozás!"> <br>
+            </form>
+        </div>
+        <div id="right">
+            <h1>Diák kilépése adott tárgyból</h1>
+            <form id="form-diakkilep" method="POST" action="/classleave" >
+                <label>Tantárgy kód: </label>
+                <input type="number" name="targykodkilep" min="1" required> <br>
+                <label>Diák felhasználó ID-ja: </label>
+                <input type="number" name="diakkodkilep" required> <br>
+                <input type="submit" value="Kilépés!"> <br>
+            </form>
+        </div>
+
     </main>
 </body>
 </html>
