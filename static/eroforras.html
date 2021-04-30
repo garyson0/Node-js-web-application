@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erőforrás-állomány feltöltése</title>
+</head>
+<body>
+    <nav>
+        <a href="tantargy.html">Új tantárgy felvitele</a>
+        <br>
+        <a href="diakcsatlakoz.html">Tárgyhoz való csatlakozás/kilépés(diákoknak)</a>
+    </nav>
+    <main>
+        <h1>Erőforrás-állomány feltöltése</h1>
+        <form id="form-eroforrasok" method="POST" action="/classfiles" enctype="multipart/form-data">
+            <label>Tantárgy kód: </label>
+            <input type="number" name="targykod1" min="1" required> <br>
+            <label>Feltöltendő fájlok: </label>
+            <input type="file" name="targyfilek" multiple> <br>
+            <input type="submit" value="Feltölt!"> <br>
+        </form>
+    </main>
+</body>
+</html>

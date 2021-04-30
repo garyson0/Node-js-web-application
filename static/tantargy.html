@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Új tantárgy felvitele</title>
+</head>
+<body>
+    <nav>
+        <a href="eroforras.html">Erőforrás-állomány feltöltése(tanároknak)</a>
+        <br>
+        <a href="diakcsatlakoz.html">Tárgyhoz való csatlakozás/kilépés(diákoknak)</a>
+    </nav>
+    <main>
+        <h1>Új tantárgy felvitele</h1>
+        <form id="form-targyak" method="POST" action="/classinfos">
+            <label>Egyedi kód: </label>
+            <input type="number" name="targykod" min="1" required> <br>
+            <label>Tárgy neve: </label>
+            <input type="text" name="targyneve" pattern="[A-Z][a-z0-9]+" required> <br>
+            <label>Évfolyam: </label>
+            <input type="number" name="targyevfolyam" min="1" max="3" required> <br>
+            <label>Kurzusok száma: </label>
+            <input type="number" name="kurzusokszama" min="7" required> <br>
+            <label>Szemináriumok száma: </label>
+            <input type="number" name="szeminariumokszama" min="7" required> <br>
+            <label>Laborok száma: </label>
+            <input type="number" name="laborokszama" min="7" required> <br>
+            <input type="submit" value="Submit"> <br>
+        </form>
+    </main>
+</body>
+</html>
