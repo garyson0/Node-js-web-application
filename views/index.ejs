@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tantárgyak</title>
+</head>
+<body id="body-style">
+    <main>
+        <p><%= error %></p>
+        <h1>Meglévő tantárgyak</h1>
+        <% tantargyak.forEach((item) => { %>
+            <div id = "roundedCorner1">
+                <h3>
+                    <a href = "/targyak/<%= item.targyKod%> "><%= item.targyNeve %></a>
+                </h3>
+                <p>Évfolyam: <%= item.evfolyam %></p>
+                <p>Kurzusok száma: <%= item.kurzusokSzama %></p>
+                <p>Szemináriumok száma: <%= item.szeminariumokSzama %></p>
+                <p>Laborok száma: <%= item.laborokSzama %></p>
+            </div>
+        <% }); %>
+    </main>
+
+    
+</body>
+</html>

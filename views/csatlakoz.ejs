@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Diák csatlakozása/kilése adott tárgyhoz/ból</title>
+</head>
+<body id="body-style">
+    <main>
+        <div id="roundedCorner2">
+            <h3>Diák csatlakozása/kilépése adott tárgyhoz/ból(ha nem létezik az adatbázisban, akkor bekerül automatikusan)</h3>
+            <form id="form-diakcsatlakoz" method="POST" action="/classjoinleave" >
+                <label>Művelet:</label>
+                <select name="muvelet">
+                    <option value="kilep">Kilépés</option>
+                    <option value="csatlakoz">Csatlakozás</option>
+                </select>
+                <br>
+                <label>Tantárgy kód: </label>
+                <select name="targykod">
+                    <% targyIdLista.forEach((id) => { %>
+                        <option value="<%= id.targyKod %>"><%= id.targyKod %></option>
+                    <% }); %>
+                </select>
+                <br>
+                <label>Felhasználó kód: </label>
+                <select name="felhasznalokod">
+                    <% felhasznaloLista.forEach((id) => { %>
+                        <option value="<%= id.felhasznaloKod %>"><%= id.felhasznaloKod %></option>
+                    <% }); %>
+                </select>
+                <br>
+                <input type="submit" value="Leccgo!">
+                <br>
+                <p><%= error %></p>
+            </form>
+        </div>
+        
+
+    </main>
+</body>
+</html>
