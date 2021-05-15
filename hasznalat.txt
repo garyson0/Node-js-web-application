@@ -1,0 +1,16 @@
+adatbazis letrehozas:
+CREATE DATABASE IF NOT EXISTS webprog;
+USE webprog;
+
+jogok:
+ALTER USER 'root'@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY 'fnaticmsiGergo159753'
+flush privileges;
+
+oldalak elerese:
+- fo oldal, targyak listazasa: http://localhost:5000/
+(innen lehet egy targy nevere kattintva tovabb menni a reszletes leirasat tart. oldalra)
+- uj targy  felvezetese: http://localhost:5000/ujtargy
+- csatlakozas/kilepes targybol: http://localhost:5000/classjoinleave
+
+
+
