@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <% targyAdatai.forEach((item) => { %>
+    <% targyAdatai.forEach((item) => { %> 
     <title><%= item.targyNeve %></title>
 </head>
 <body id="body-style">
@@ -47,16 +47,23 @@
                 <th>Név</th>
                 <th>Beosztás</th>
             </tr>
-            <% targyTagjai.forEach((item) => { %>
+            <% targyTagjai.forEach((tagok) => { %>
                 <tr>
-                    <td><%= item.felhasznaloKod %></td>
-                    <td><%= item.nev %></td>
-                    <td><%= item.beosztas %></td>
+                    <td><%= tagok.felhasznaloKod %></td>
+                    <td><%= tagok.nev %></td>
+                    <td><%= tagok.beosztas %></td>
                 </tr>
             <% }); %>
         </table>
     </main>
-    <main>
+    <div>
+        <h1>Tantárgyhoz tartozó fájlok</h1>
+        <% targyFilek.forEach((tfile) => { %>
+                <a href="<%= tfile.letoltInnen %>" download><%= tfile.allomanyNev %></a>
+                <br>
+        <% }); %>
+    </div>
+    <div>
         <h1>Erőforrás-állomány feltöltése</h1>
         <form id="form-eroforrasok" method="POST" action="/classfiles/<%= item.targyKod %>" enctype="multipart/form-data">
             <label>Feltöltendő fájlok: </label>
@@ -64,7 +71,7 @@
             <input type="submit" value="Feltölt!"> <br>
         </form>
         <p><%= error %></p>
-    </main>
+    </div>
     <% }); %>
 
 </body>
