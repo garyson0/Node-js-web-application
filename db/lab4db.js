@@ -66,15 +66,17 @@ export function deleteJelentkezes(del) {
 
 export function createAllomanyokTable() {
   return queryPromise(`CREATE TABLE IF NOT EXISTS Allomanyok(
+      allomanyId int AUTO_INCREMENT,
       targyKod int,
-      allomanyNev varchar(30),
-      PRIMARY KEY(targyKod)
+      allomanyNev varchar(60),
+      letoltInnen varchar(250),
+      PRIMARY KEY(allomanyId)
   );`);
 }
 
 export function insertAllomanyok(allomanyok) {
-  return queryPromise(`INSERT INTO Allomanyok (targyKod, allomanyNev) VALUES (
-    ?, ?)`, [allomanyok.targykod, allomanyok.allomanynev]);
+  return queryPromise(`INSERT INTO Allomanyok (targyKod, allomanyNev, letoltInnen) VALUES (
+    ?, ?, ?)`, [allomanyok.targykod, allomanyok.allomanynev, allomanyok.letoltinnen]);
 }
 
 export function getTantargyInfosById(tantargy) {
@@ -94,6 +96,10 @@ export function getFelhasznaloIdList() {
   return queryPromise('SELECT felhasznaloKod FROM Felhasznalo');
 }
 
+export function getTargyFilek(tantargy) {
+  return queryPromise('SELECT allomanyNev, letoltInnen FROM Allomanyok WHERE targyKod = ?', [tantargy.targykod]);
+}
+
 export function userExistsAtGivenTantargy(exists) {
   return queryPromise('SELECT 1 FROM Jelentkezes WHERE targyKod = ? AND felhasznaloKod = ?', [exists.targykod, exists.felhasznalokod]);
 }
@@ -101,3 +107,8 @@ export function userExistsAtGivenTantargy(exists) {
 export function tantargyExists(exists) {
   return queryPromise('SELECT 1 FROM Tantargy WHERE targyNeve = ? AND evfolyam = ? AND kurzusokSzama = ? AND szeminariumokSzama = ? AND laborokSzama = ?', [exists.targyneve, exists.targyevfolyam, exists.kurzusokszama, exists.szeminariumokszama, exists.laborokszama]);
 }
+
+createTantargyTable();
+createFelhasznaloTable();
+createJelentkezesTable();
+createAllomanyokTable();
