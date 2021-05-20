@@ -16,33 +16,28 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.post('/:id', async (req, resp) => {
-  let error = '';
+  const error = '';
   const fileHandler = req.files.targyfilek;
-  const regiUtvonal = fileHandler.path;
-  const newDir = `${uploadDir}/${req.params.id}/`;
-  const ujUtvonal = `${uploadDir}/${req.params.id}/${req.files.targyfilek.name}`;
-  if (!fs.existsSync(newDir)) {
-    fs.mkdirSync(newDir);
-  }
 
-  fs.copyFile(regiUtvonal, ujUtvonal, (err) => {
-    const allomanyok = {
-      targykod: req.params.id,
-      allomanynev: fileHandler.name,
-    };
-    db.insertAllomanyok(allomanyok);
+  const allomanyok = {
+    targykod: req.params.id,
+    allomanynev: fileHandler.name,
+    letoltinnen: fileHandler.path,
+  };
 
-    if (err) {
-      error = 'Sikertelen fajl feltoltes!';
-    } else {
-      error = 'Sikeres fajl feltoltes!';
-    }
-    return undefined;
-  });
+  await db.insertAllomanyok(allomanyok);
+
   const targyId = { targykod: req.params.id };
-  const targyAdatai = await db.getTantargyInfosById(targyId);
-  const targyTagjai = await db.getMembersOfTantargy(targyId);
-  resp.render('targyadatai', { error, targyAdatai, targyTagjai });
+
+  const [targyAdatai, targyTagjai, targyFilek] = await Promise.all(
+    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId), db.getTargyFilek(targyId)],
+  );
+
+  // const targyAdatai = await db.getTantargyInfosById(targyId);
+  // const targyTagjai = await db.getMembersOfTantargy(targyId);
+  resp.render('targyadatai', {
+    error, targyAdatai, targyTagjai, targyFilek,
+  });
 });
 
 export default router;
