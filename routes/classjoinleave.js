@@ -8,8 +8,11 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get('/', async (req, resp) => {
   const error = '';
-  const targyIdLista = await db.getTantargyIdList();
-  const felhasznaloLista = await db.getFelhasznaloIdList();
+  // const targyIdLista = await db.getTantargyIdList();
+  // const felhasznaloLista = await db.getFelhasznaloIdList();
+  const [targyIdLista, felhasznaloLista] = await Promise.all(
+    [db.getTantargyIdList(), db.getFelhasznaloIdList()],
+  );
   resp.render('csatlakoz', { error, targyIdLista, felhasznaloLista });
 });
 
@@ -23,9 +26,13 @@ router.post('/', async (req, resp) => {
     felhasznalokod: felhasznaloKod,
   };
 
-  const targyIdLista = await db.getTantargyIdList();
-  const felhasznaloLista = await db.getFelhasznaloIdList();
-  const userJoined = await db.userExistsAtGivenTantargy(exists);
+  const [targyIdLista, felhasznaloLista, userJoined] = await Promise.all(
+    [db.getTantargyIdList(), db.getFelhasznaloIdList(), db.userExistsAtGivenTantargy(exists)],
+  );
+
+  // const targyIdLista = await db.getTantargyIdList();
+  // const felhasznaloLista = await db.getFelhasznaloIdList();
+  // const userJoined = await db.userExistsAtGivenTantargy(exists);
 
   const userJoinedTmp = userJoined.length;
 
@@ -38,7 +45,7 @@ router.post('/', async (req, resp) => {
       error = 'Hiba: az adott felhasznalo nem tartozik a targyhoz!';
     } else {
       error = 'Sikeres kilepes!';
-      db.deleteJelentkezes(jelentkezes);
+      await db.deleteJelentkezes(jelentkezes);
     }
   } else {
     const jelentkezes = {
@@ -50,7 +57,7 @@ router.post('/', async (req, resp) => {
       error = 'Hiba: az adott felhasznalo mar csatlakozott a targyhoz!';
     } else {
       error = 'Sikeres csatlakozas!';
-      db.insertJelentkezes(jelentkezes);
+      await db.insertJelentkezes(jelentkezes);
     }
   }
   resp.render('csatlakoz', { error, targyIdLista, felhasznaloLista });
