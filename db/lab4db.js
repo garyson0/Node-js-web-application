@@ -112,3 +112,13 @@ createTantargyTable();
 createFelhasznaloTable();
 createJelentkezesTable();
 createAllomanyokTable();
+// teszteleshez
+let felhasznalo = {
+  nev: 'Elemer',
+};
+insertFelhasznalo(felhasznalo);
+
+felhasznalo = {
+  nev: 'Geza',
+};
+insertFelhasznalo(felhasznalo);
