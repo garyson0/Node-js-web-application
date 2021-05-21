@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="../style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <% targyAdatai.forEach((item) => { %> 
-    <title><%= item.targyNeve %></title>
+    
+    <title><%= targyAdatai.targyNeve %></title>
 </head>
 <body id="body-style">
     <main>
@@ -14,26 +14,26 @@
         <table id="targyadatai">
             <tr>
                 <th>Tárgy kódja:</th>
-                <td><%= item.targyKod %></td>
+                <td><%= targyAdatai.targyKod %></td>
             </tr>
             <tr>
                 <th>Tárgy neve:</th>
-                <td><%= item.targyNeve %></td>
+                <td><%= targyAdatai.targyNeve %></td>
             </tr>
                 <th>Dedikált évfolyam:</th>
-                <td><%= item.evfolyam %></td>
+                <td><%= targyAdatai.evfolyam %></td>
             </tr>
             <tr>
                 <th>Kurzusok száma:</th>
-                <td><%= item.kurzusokSzama %></td>
+                <td><%= targyAdatai.kurzusokSzama %></td>
             </tr>
             <tr>
                 <th>Szemináriumok száma:</th>
-                <td><%= item.szeminariumokSzama %></td>
+                <td><%= targyAdatai.szeminariumokSzama %></td>
             </tr>
             <tr>
                 <th>Laborok száma:</th>
-                <td><%= item.laborokSzama %></td>
+                <td><%= targyAdatai.laborokSzama %></td>
             </tr>
         </table>
         
@@ -65,14 +65,13 @@
     </div>
     <div>
         <h1>Erőforrás-állomány feltöltése</h1>
-        <form id="form-eroforrasok" method="POST" action="/classfiles/<%= item.targyKod %>" enctype="multipart/form-data">
+        <form id="form-eroforrasok" method="POST" action="/classfiles/<%= targyAdatai.targyKod %>" enctype="multipart/form-data">
             <label>Feltöltendő fájlok: </label>
             <input type="file" name="targyfilek"> <br>
             <input type="submit" value="Feltölt!"> <br>
         </form>
         <p><%= error %></p>
     </div>
-    <% }); %>
 
 </body>
 </html>
