@@ -80,7 +80,9 @@ export function insertAllomanyok(allomanyok) {
 }
 
 export function getTantargyInfosById(tantargy) {
-  return queryPromise('SELECT * FROM Tantargy WHERE targyKod = ?', [tantargy.targykod]);
+  const ret = [];
+  ret.push(queryPromise('SELECT * FROM Tantargy WHERE targyKod = ?', [tantargy.targykod]));
+  return ret[0];
 }
 
 export function getMembersOfTantargy(tantargy) {
