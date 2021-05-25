@@ -1,0 +1,21 @@
+adatbazis letrehozas:
+CREATE DATABASE IF NOT EXISTS webprog;
+USE webprog;
+
+jogok:
+ALTER USER 'root'@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY 'fnaticmsiGergo159753'
+flush privileges;
+
+oldalak elerese:
+- fo oldal, targyak listazasa: http://localhost:5000/
+(innen lehet egy targy nevere kattintva tovabb menni a reszletes leirasat tart. oldalra)
+- uj targy  felvezetese: http://localhost:5000/ujtargy
+- csatlakozas/kilepes targybol: http://localhost:5000/classjoinleave
+
+adatbazis elmek teszteleshez:
+INSERT INTO Tantargy (targyNeve, evfolyam, kurzusokSzama, szeminariumokSzama, laborokSzama) VALUES ('Adatbazis',2,14,7,7),('Algoritmika',1,14,14,14),('OOP',1,14,7,14);
+INSERT INTO Felhasznalo (nev) VALUES ('Ven Gergo'),('Tanar Elek'),('Kecskes David');
+INSERT INTO Jelentkezes (targyKod, felhasznaloKod, beosztas) VALUES (1,1,0),(1,2,1),(1,3,0),(2,1,0),(2,2,1);
+
+
+

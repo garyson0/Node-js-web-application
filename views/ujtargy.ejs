@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Új tantárgy felvitele</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Új tantárgy</title>
 </head>
-<body>
-    <nav>
-        <a href="eroforras.html">Erőforrás-állomány feltöltése(tanároknak)</a>
-        <br>
-        <a href="diakcsatlakoz.html">Tárgyhoz való csatlakozás/kilépés(diákoknak)</a>
-    </nav>
+<body id="body-style">
+    
     <main>
         <h1>Új tantárgy felvitele</h1>
-        <form id="form-targyak" method="POST" action="/classinfos">
+        <form id="form-targyak" method="POST" action="/ujtargy">
             <label>Egyedi kód: </label>
             <input type="number" name="targykod" min="1" required> <br>
             <label>Tárgy neve: </label>
@@ -29,5 +26,8 @@
             <input type="submit" value="Submit"> <br>
         </form>
     </main>
+    
+
+    
 </body>
 </html>

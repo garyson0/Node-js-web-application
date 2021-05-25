@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <title><%= targyAdatai.targyNeve %></title>
+</head>
+<body id="body-style">
+    <main>
+        <h1>Tantárgy adatai</h1>
+        <table id="targyadatai">
+            <tr>
+                <th>Tárgy kódja:</th>
+                <td><%= targyAdatai.targyKod %></td>
+            </tr>
+            <tr>
+                <th>Tárgy neve:</th>
+                <td><%= targyAdatai.targyNeve %></td>
+            </tr>
+                <th>Dedikált évfolyam:</th>
+                <td><%= targyAdatai.evfolyam %></td>
+            </tr>
+            <tr>
+                <th>Kurzusok száma:</th>
+                <td><%= targyAdatai.kurzusokSzama %></td>
+            </tr>
+            <tr>
+                <th>Szemináriumok száma:</th>
+                <td><%= targyAdatai.szeminariumokSzama %></td>
+            </tr>
+            <tr>
+                <th>Laborok száma:</th>
+                <td><%= targyAdatai.laborokSzama %></td>
+            </tr>
+        </table>
+        
+        <h1>Tantárgy tagjai</h1>
+        <h3>Beosztások:</h3>
+        <p>0(diák)</p>
+        <p>1(tanár)</p>        
+        <table id="targyadatai">
+            <tr>
+                <th>Felhasználó kódja</th>
+                <th>Név</th>
+                <th>Beosztás</th>
+            </tr>
+            <% targyTagjai.forEach((tagok) => { %>
+                <tr>
+                    <td><%= tagok.felhasznaloKod %></td>
+                    <td><%= tagok.nev %></td>
+                    <td><%= tagok.beosztas %></td>
+                </tr>
+            <% }); %>
+        </table>
+    </main>
+    <div>
+        <h1>Tantárgyhoz tartozó fájlok</h1>
+        <% targyFilek.forEach((tfile) => { %>
+                <a href="<%= tfile.letoltInnen %>" download><%= tfile.allomanyNev %></a>
+                <br>
+        <% }); %>
+    </div>
+    <div>
+        <h1>Erőforrás-állomány feltöltése</h1>
+        <form id="form-eroforrasok" method="POST" action="/classfiles/<%= targyAdatai.targyKod %>" enctype="multipart/form-data">
+            <label>Feltöltendő fájlok: </label>
+            <input type="file" name="targyfilek"> <br>
+            <input type="submit" value="Feltölt!"> <br>
+        </form>
+        <p><%= error %></p>
+    </div>
+
+</body>
+</html>
