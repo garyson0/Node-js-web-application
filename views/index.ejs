@@ -11,18 +11,19 @@
         <p><%= error %></p>
         <h1>Meglévő tantárgyak</h1>
         <% tantargyak.forEach((item) => { %>
-            <div id = "roundedCorner1">
+            <div class="roundedCorner1" id="<%= item.targyKod%>" onclick="showFilesOfClass('<%= item.targyKod%>')">
                 <h3>
-                    <a href = "/targyak/<%= item.targyKod%> "><%= item.targyNeve %></a>
+                    <a href="/targyak/<%= item.targyKod%> "><%= item.targyNeve %></a>
                 </h3>
                 <p>Évfolyam: <%= item.evfolyam %></p>
                 <p>Kurzusok száma: <%= item.kurzusokSzama %></p>
                 <p>Szemináriumok száma: <%= item.szeminariumokSzama %></p>
                 <p>Laborok száma: <%= item.laborokSzama %></p>
+
             </div>
         <% }); %>
     </main>
 
-    
+    <script src="/script.js"></script>
 </body>
 </html>
