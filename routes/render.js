@@ -24,7 +24,7 @@ router.get('/:id', async (req, resp) => {
     resp.json(fajlok);
   } catch (err) {
     console.log(`Error: ${err}`);
-    resp.status(500).send('Nem sikerult lekerni a targyhoz tartozo fajlokat!');
+    resp.status(500).json('Nem sikerult lekerni a targyhoz tartozo fajlokat!');
   }
 });
 
