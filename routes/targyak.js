@@ -21,7 +21,8 @@ router.get('/:id', async (req, resp) => {
 
 router.delete('/', async (req, resp) => {
   try {
-    await db.deleteAllomany(req.body);
+    const responseDelete = await db.deleteAllomany(req.body);
+    if (responseDelete.affectedRows === 0) resp.json('Nem sikerult az adatbazisbol torolni az allomanyt!');
     resp.json('Sikeres torles!');
   } catch (err) {
     resp.status(500).json('Sikertelen torles!');
