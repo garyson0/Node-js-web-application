@@ -14,4 +14,18 @@ router.get('/', async (req, resp) => {
   resp.render('index', { error, tantargyak });
 });
 
+router.get('/:id', async (req, resp) => {
+  try {
+    const tantargy = {
+      targykod: req.params.id,
+    };
+    const fajlok = await db.getTargyFilek(tantargy);
+
+    resp.json(fajlok);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    resp.status(500).send('Nem sikerult lekerni a targyhoz tartozo fajlokat!');
+  }
+});
+
 export default router;
