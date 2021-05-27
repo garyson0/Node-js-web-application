@@ -3,6 +3,7 @@ function removeElement(id) {
   elem.remove();
 }
 
+// eslint-disable-next-line no-unused-vars
 async function showFilesOfClass(id) {
   try {
     await fetch('/'.concat(id)).then((response) => response.text()).then(((responseText) => {
@@ -36,36 +37,35 @@ async function showFilesOfClass(id) {
       divClicked.parentNode.insertBefore(newDiv, divClicked.nextSibling); // insert after
     }));
   } catch (err) {
-    alert(err.message);
+    console.log(err.message);
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 async function deleteTargy(allomanyNev) {
-  if (confirm('Biztosan szeretne torolni ezt az allomanyt?')) {
-    const divToDelete = document.getElementById(allomanyNev);
-    const allomanyokCim = document.getElementById('allomanyokcim');
-    const targyKod = divToDelete.className;
-    try {
-      const data = {
-        targykod: targyKod,
-        allomanynev: allomanyNev,
-      };
-      await fetch('/targyak', {
-        method: 'DELETE',
-        body: JSON.stringify(data),
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      }).then((response) => response.text()).then(((responseText) => {
-        const response = JSON.parse(responseText);
-        const p = document.createElement('p');
-        const text = document.createTextNode(response);
-        p.appendChild(text);
-        allomanyokCim.parentNode.insertBefore(p, allomanyokCim.nextSibling); // insert after
-        if (response === 'Sikeres torles!') {
-          removeElement(allomanyNev);
-        }
-      }));
-    } catch (err) {
-      alert(err.message);
-    }
+  const divToDelete = document.getElementById(allomanyNev);
+  const allomanyokCim = document.getElementById('allomanyokcim');
+  const targyKod = divToDelete.className;
+  try {
+    const data = {
+      targykod: targyKod,
+      allomanynev: allomanyNev,
+    };
+    await fetch('/targyak', {
+      method: 'DELETE',
+      body: JSON.stringify(data),
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    }).then((response) => response.text()).then(((responseText) => {
+      const response = JSON.parse(responseText);
+      const p = document.createElement('p');
+      const text = document.createTextNode(response);
+      p.appendChild(text);
+      allomanyokCim.parentNode.insertBefore(p, allomanyokCim.nextSibling); // insert after
+      if (response === 'Sikeres torles!') {
+        removeElement(allomanyNev);
+      }
+    }));
+  } catch (err) {
+    console.log(err.message);
   }
 }
