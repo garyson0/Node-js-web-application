@@ -79,6 +79,10 @@ export function insertAllomanyok(allomanyok) {
     ?, ?, ?)`, [allomanyok.targykod, allomanyok.allomanynev, allomanyok.letoltinnen]);
 }
 
+export function deleteAllomany(allomany) {
+  return queryPromise('DELETE FROM Allomanyok WHERE targyKod = ? AND allomanyNev = ?', [allomany.targykod, allomany.allomanynev]);
+}
+
 export function getTantargyInfosById(tantargy) {
   const ret = [];
   ret.push(queryPromise('SELECT * FROM Tantargy WHERE targyKod = ?', [tantargy.targykod]));
