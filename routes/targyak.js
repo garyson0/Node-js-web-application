@@ -19,4 +19,14 @@ router.get('/:id', async (req, resp) => {
   });
 });
 
+router.delete('/', async (req, resp) => {
+  try {
+    await db.deleteAllomany(req.body);
+    resp.json('Sikeres torles!');
+  } catch (err) {
+    resp.status(500).json('Sikertelen torles!');
+    console.error(err);
+  }
+});
+
 export default router;
