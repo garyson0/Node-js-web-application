@@ -7,7 +7,7 @@ import fajlokRouter from './routes/classfiles.js';
 import ujTargyRouter from './routes/newclass.js';
 import csatlakozasKilepesRouter from './routes/classjoinleave.js';
 import authRouter from './auth/router.js';
-import { decodeToken, checkToken } from './auth/middleware.js';
+import { decodeToken } from './auth/middleware.js';
 
 const app = express();
 const port = 5000;
