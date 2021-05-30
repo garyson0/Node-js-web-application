@@ -1,25 +1,30 @@
 import express from 'express';
 import * as db from '../db/lab4db.js';
+import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/:id', async (req, resp) => {
+router.get('/:id', checkToken, async (req, resp) => {
   const error = '';
   const targyId = { targykod: req.params.id };
-  const [targyAdataiTmp, targyTagjai, targyFilek] = await Promise.all(
-    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId), db.getTargyFilek(targyId)],
+  const [targyAdataiTmp, targyTagjai, targyFilek, targyTulajaTmp] = await Promise.all(
+    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId),
+      db.getTargyFilek(targyId), db.getTantargyOwner(targyId)],
   );
 
   const targyAdatai = targyAdataiTmp[0];
+  const targyTulaja = targyTulajaTmp[0];
+  console.log(targyTulaja);
+
   resp.render('targyadatai', {
-    error, targyAdatai, targyTagjai, targyFilek,
+    error, targyAdatai, targyTagjai, targyFilek, targyTulaja,
   });
 });
 
-router.delete('/', async (req, resp) => {
+router.delete('/', checkToken, async (req, resp) => {
   try {
     const responseDelete = await db.deleteAllomany(req.body);
     if (responseDelete.affectedRows === 0) resp.json('Nem sikerult az adatbazisbol torolni az allomanyt!');

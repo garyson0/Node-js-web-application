@@ -6,7 +6,7 @@ function removeElement(id) {
 // eslint-disable-next-line no-unused-vars
 async function showFilesOfClass(id) {
   try {
-    await fetch('/'.concat(id)).then((response) => response.text()).then(((responseText) => {
+    await fetch('/getfile/'.concat(id)).then((response) => response.text()).then(((responseText) => {
       const data = JSON.parse(responseText);
       const checkIfDivExists = document.getElementById(id.concat('_allomanyok'));
       if (checkIfDivExists) {

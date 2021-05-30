@@ -1,17 +1,18 @@
 import express from 'express';
 import * as db from '../db/lab4db.js';
+import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/', async (req, resp) => {
+router.get('/', (req, resp) => {
   const error = '';
   resp.render('ujtargy', { error });
 });
 
-router.post('/', async (req, resp) => {
+router.post('/', checkToken, async (req, resp) => {
   let error = '';
   const namePattern = /^[A-Z][a-z0-9]+$/;
   const targyNeve = (req.body.targyneve).toString();
@@ -34,7 +35,7 @@ router.post('/', async (req, resp) => {
     szeminariumokszama: szeminariumokSzama,
     laborokszama: laborokSzama,
   };
-  const checkTargy = db.tantargyExists(exists);
+  const checkTargy = await db.tantargyExists(exists);
   const checkTargyTmp = checkTargy.length;
 
   const checkEvfolyam = targyEvfolyam >= 1 && targyEvfolyam <= 3;
@@ -50,9 +51,10 @@ router.post('/', async (req, resp) => {
       kurzus: kurzusokSzama,
       szem: szeminariumokSzama,
       lab: laborokSzama,
+      tulajdonosid: resp.locals.tokenObject.id,
     };
     error = 'Sikeres letrehozas!';
-    db.insertTantargy(ujtargy);
+    await db.insertTantargy(ujtargy);
   }
   const tantargyak = await db.findAllTantargy();
   resp.render('index', { error, tantargyak });

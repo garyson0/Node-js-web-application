@@ -1,12 +1,13 @@
 import express from 'express';
 import * as db from '../db/lab4db.js';
+import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/', async (req, resp) => {
+router.get('/', checkToken, async (req, resp) => {
   const error = '';
 
   const [targyIdLista, felhasznaloLista] = await Promise.all(

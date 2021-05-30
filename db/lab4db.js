@@ -20,15 +20,19 @@ export function createTantargyTable() {
       kurzusokSzama int,
       szeminariumokSzama int,
       laborokSzama int,
+      tulajdonosID int,
       PRIMARY KEY(targyKod)
   );`);
 }
 
 export function insertTantargy(targyak) {
-  return queryPromise(`INSERT INTO Tantargy (targyNeve, evfolyam, kurzusokSzama, szeminariumokSzama, laborokSzama) VALUES (
-    ?, ?, ?, ?, ?)`, [targyak.nev, targyak.evfolyam, targyak.kurzus, targyak.szem, targyak.lab]);
+  return queryPromise(`INSERT INTO Tantargy (targyNeve, evfolyam, kurzusokSzama, szeminariumokSzama, laborokSzama, tulajdonosID) VALUES (
+    ?, ?, ?, ?, ?, ?)`, [targyak.nev, targyak.evfolyam, targyak.kurzus, targyak.szem, targyak.lab, targyak.tulajdonosid]);
 }
 
+export function getTantargyOwner(targy) {
+  return queryPromise('SELECT tulajdonosID FROM Tantargy WHERE targyKod = ?', [targy.targykod]);
+}
 export function findAllTantargy() {
   return queryPromise('SELECT * FROM Tantargy');
 }
@@ -114,10 +118,38 @@ export function tantargyExists(exists) {
   return queryPromise('SELECT 1 FROM Tantargy WHERE targyNeve = ? AND evfolyam = ? AND kurzusokSzama = ? AND szeminariumokSzama = ? AND laborokSzama = ?', [exists.targyneve, exists.targyevfolyam, exists.kurzusokszama, exists.szeminariumokszama, exists.laborokszama]);
 }
 
+export function createFelhasznaloAuthTable() {
+  return queryPromise(`CREATE TABLE IF NOT EXISTS FelhasznaloAuth(
+    authId int AUTO_INCREMENT,
+    felhasznalonev varchar(250) UNIQUE,
+    passwordSalted varchar(400),
+    frole varchar(50),
+    PRIMARY KEY(authId)
+);`);
+}
+
+export function usernameExists(exists) {
+  return queryPromise('SELECT 1 FROM FelhasznaloAuth WHERE felhasznalonev = ?', [exists.username]);
+}
+
+export function getUserIdByUserName(user) {
+  return queryPromise('SELECT authId FROM FelhasznaloAuth WHERE felhasznalonev = ?', [user.username]);
+}
+
+export function getPasswordAndSalt(user) {
+  return queryPromise('SELECT passwordSalted FROM FelhasznaloAuth WHERE felhasznalonev = ?', [user.username]);
+}
+
+export function insertFelhasznaloAuth(felhasznalo) {
+  return queryPromise(`INSERT INTO FelhasznaloAuth (felhasznalonev, passwordSalted, frole) VALUES (
+    ?, ?, ?)`, [felhasznalo.felhnev, felhasznalo.pass, felhasznalo.role]);
+}
+
 createTantargyTable();
 createFelhasznaloTable();
 createJelentkezesTable();
 createAllomanyokTable();
+createFelhasznaloAuthTable();
 // teszteleshez
 let felhasznalo = {
   nev: 'Elemer',

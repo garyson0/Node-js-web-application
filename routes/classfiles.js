@@ -3,6 +3,7 @@ import eformidable from 'express-formidable';
 import fs from 'fs';
 import path from 'path';
 import * as db from '../db/lab4db.js';
+import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 const uploadDir = path.join(process.cwd(), 'uploadDir');
@@ -15,7 +16,7 @@ router.use(eformidable({ uploadDir }));
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post('/:id', async (req, resp) => {
+router.post('/:id', checkToken, async (req, resp) => {
   const error = '';
   const fileHandler = req.files.targyfilek;
 
