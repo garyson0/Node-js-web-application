@@ -42,7 +42,7 @@ async function showFilesOfClass(id) {
 }
 
 // eslint-disable-next-line no-unused-vars
-async function deleteTargy(allomanyNev) {
+async function deleteTargy(allomanyNev, userId) {
   const divToDelete = document.getElementById(allomanyNev);
   const allomanyokCim = document.getElementById('allomanyokcim');
   const targyKod = divToDelete.className;
@@ -50,6 +50,7 @@ async function deleteTargy(allomanyNev) {
     const data = {
       targykod: targyKod,
       allomanynev: allomanyNev,
+      userID: userId,
     };
     await fetch('/targyak', {
       method: 'DELETE',
