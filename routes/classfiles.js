@@ -30,13 +30,16 @@ router.post('/:id', checkToken, async (req, resp) => {
 
   const targyId = { targykod: req.params.id };
 
-  const [targyAdataiTmp, targyTagjai, targyFilek] = await Promise.all(
-    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId), db.getTargyFilek(targyId)],
+  const [targyAdataiTmp, targyTagjai, targyFilek, targyTulajaTmp] = await Promise.all(
+    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId),
+      db.getTargyFilek(targyId), db.getTantargyOwner(targyId)],
   );
 
   const targyAdatai = targyAdataiTmp[0];
+  const targyTulaja = targyTulajaTmp[0];
+
   resp.render('targyadatai', {
-    error, targyAdatai, targyTagjai, targyFilek,
+    error, targyAdatai, targyTagjai, targyFilek, targyTulaja,
   });
 });
 
