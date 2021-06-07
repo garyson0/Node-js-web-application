@@ -51,7 +51,7 @@ router.post('/regisztral', async (req, resp) => {
 
   const registerUser = {
     felhnev: req.body.username,
-    pass: bcrypt.hashSync(req.body.password, 10),
+    pass: bcrypt.hash(req.body.password, 10),
     role: 'user',
   };
 
