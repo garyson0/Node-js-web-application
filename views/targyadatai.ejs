@@ -14,7 +14,9 @@
 
 <body id="body-style">
     <main>
-        <h1><%- include('name.ejs') %></h1>
+        <h1>
+            <%- include('name.ejs') %>
+        </h1>
         <h1>Tantárgy adatai</h1>
         <table id="targyadatai">
             <tr>
@@ -86,29 +88,32 @@
                 <a href="<%= tfile.letoltInnen %>">
                     <%= tfile.allomanyNev %>
                 </a>
-            </div>
-            
-            <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.tulajdonosID === 'admin') { %>
-                <button class="deleteButton"
-                onclick="deleteTargy('<%= tfile.allomanyNev %>')">Torles</button>
-                <% } %>
-            <br>
-            <% }); %>
 
+                <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.id === 'admin' ) { %>
+                    <button class="deleteButton"
+                        onclick="deleteTargy('<%= tfile.allomanyNev %>','<%= tokenObject.id %>')">Torles</button>
+                    <% } %>
+                        <br>
+    
+                <% }); %>
+            </div>
+
+
+        
     </div>
     <div>
-        <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.tulajdonosID === 'admin') { %>
-        <h1>Erőforrás-állomány feltöltése</h1>
-        <form id="form-eroforrasok" method="POST" action="/classfiles/<%= targyAdatai.targyKod %>"
-            enctype="multipart/form-data">
-            <label>Feltöltendő fájlok: </label>
-            <input type="file" name="targyfilek"> <br>
-            <input type="submit" value="Feltölt!"> <br>
-        </form>
-        <% } %>
-        <p>
-            <%= error %>
-        </p>
+        <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.id === 'admin') { %>
+            <h1>Erőforrás-állomány feltöltése</h1>
+            <form id="form-eroforrasok" method="POST" action="/classfiles/<%= targyAdatai.targyKod %>"
+                enctype="multipart/form-data">
+                <label>Feltöltendő fájlok: </label>
+                <input type="file" name="targyfilek"> <br>
+                <input type="submit" value="Feltölt!"> <br>
+            </form>
+            <% } %>
+                <p>
+                    <%= error %>
+                </p>
     </div>
 
     <script src="/script.js"></script>
