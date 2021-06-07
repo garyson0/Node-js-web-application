@@ -17,7 +17,6 @@ router.get('/:id', checkToken, async (req, resp) => {
 
   const targyAdatai = targyAdataiTmp[0];
   const targyTulaja = targyTulajaTmp[0];
-  console.log(targyTulaja);
 
   resp.render('targyadatai', {
     error, targyAdatai, targyTagjai, targyFilek, targyTulaja,
@@ -26,9 +25,16 @@ router.get('/:id', checkToken, async (req, resp) => {
 
 router.delete('/', checkToken, async (req, resp) => {
   try {
-    const responseDelete = await db.deleteAllomany(req.body);
-    if (responseDelete.affectedRows === 0) resp.json('Nem sikerult az adatbazisbol torolni az allomanyt!');
-    resp.json('Sikeres torles!');
+    // le ellenorizem a jogosultsagot
+    const targyTulajaTmp = await db.getTantargyOwner({ targykod: req.body.targykod });
+    const targyTulajaID = targyTulajaTmp[0];
+    if (targyTulajaID.tulajdonosID.toString() === req.body.userID) {
+      const responseDelete = await db.deleteAllomany(req.body);
+      if (responseDelete.affectedRows === 0) resp.json('Nem sikerult az adatbazisbol torolni az allomanyt!');
+      resp.json('Sikeres torles!');
+    } else {
+      resp.json(401).json('Nincs jogosultságod törölni!');
+    }
   } catch (err) {
     resp.status(500).json('Sikertelen torles!');
     console.error(err);
