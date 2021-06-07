@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body id="body-style">
+    
+    <main>
+        <h1>Bejelentkezés</h1>
+        <form id="form-login" method="POST" action="/auth/login">
+            <label>Felhasználó név: </label>
+            <input type="text" name="username" required> <br>
+            <label>Jelszó: </label>
+            <input type="password" name="password" required> <br>
+            <input type="submit" value="Belép"> <br>
+            <button type="submit" formaction="/auth/regisztral">Regisztrál</button>
+        </form>
+    </main>
+    
+
+    <link rel="stylesheet" href="../static/style.css">
+
+</body>
+</html>

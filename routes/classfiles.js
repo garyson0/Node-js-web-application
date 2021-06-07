@@ -3,6 +3,7 @@ import eformidable from 'express-formidable';
 import fs from 'fs';
 import path from 'path';
 import * as db from '../db/lab4db.js';
+import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 const uploadDir = path.join(process.cwd(), 'uploadDir');
@@ -15,7 +16,7 @@ router.use(eformidable({ uploadDir }));
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post('/:id', async (req, resp) => {
+router.post('/:id', checkToken, async (req, resp) => {
   const error = '';
   const fileHandler = req.files.targyfilek;
 
@@ -29,13 +30,16 @@ router.post('/:id', async (req, resp) => {
 
   const targyId = { targykod: req.params.id };
 
-  const [targyAdataiTmp, targyTagjai, targyFilek] = await Promise.all(
-    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId), db.getTargyFilek(targyId)],
+  const [targyAdataiTmp, targyTagjai, targyFilek, targyTulajaTmp] = await Promise.all(
+    [db.getTantargyInfosById(targyId), db.getMembersOfTantargy(targyId),
+      db.getTargyFilek(targyId), db.getTantargyOwner(targyId)],
   );
 
   const targyAdatai = targyAdataiTmp[0];
+  const targyTulaja = targyTulajaTmp[0];
+
   resp.render('targyadatai', {
-    error, targyAdatai, targyTagjai, targyFilek,
+    error, targyAdatai, targyTagjai, targyFilek, targyTulaja,
   });
 });
 

@@ -6,7 +6,7 @@ function removeElement(id) {
 // eslint-disable-next-line no-unused-vars
 async function showFilesOfClass(id) {
   try {
-    await fetch('/'.concat(id)).then((response) => response.text()).then(((responseText) => {
+    await fetch('/getfile/'.concat(id)).then((response) => response.text()).then(((responseText) => {
       const data = JSON.parse(responseText);
       const checkIfDivExists = document.getElementById(id.concat('_allomanyok'));
       if (checkIfDivExists) {
@@ -42,7 +42,7 @@ async function showFilesOfClass(id) {
 }
 
 // eslint-disable-next-line no-unused-vars
-async function deleteTargy(allomanyNev) {
+async function deleteTargy(allomanyNev, userId) {
   const divToDelete = document.getElementById(allomanyNev);
   const allomanyokCim = document.getElementById('allomanyokcim');
   const targyKod = divToDelete.className;
@@ -50,6 +50,7 @@ async function deleteTargy(allomanyNev) {
     const data = {
       targykod: targyKod,
       allomanynev: allomanyNev,
+      userID: userId,
     };
     await fetch('/targyak', {
       method: 'DELETE',

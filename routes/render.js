@@ -2,6 +2,7 @@
 
 import express from 'express';
 import * as db from '../db/lab4db.js';
+import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 
@@ -11,10 +12,11 @@ router.use(express.urlencoded({ extended: true }));
 router.get('/', async (req, resp) => {
   const tantargyak = await db.findAllTantargy();
   const error = '';
+  // console.log(resp.locals);
   resp.render('index', { error, tantargyak });
 });
 
-router.get('/:id', async (req, resp) => {
+router.get('/getfile/:id', checkToken, async (req, resp) => {
   try {
     const tantargy = {
       targykod: req.params.id,
