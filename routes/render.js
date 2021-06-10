@@ -2,7 +2,6 @@
 
 import express from 'express';
 import * as db from '../db/lab4db.js';
-import { checkToken } from '../auth/middleware.js';
 
 const router = express.Router();
 
