@@ -17,7 +17,7 @@ router.get('/:id', async (req, resp) => {
   resp.render('sajat', { error, tantargyak });
 });
 
-router.post('/search/:id', async (req, resp) => {
+router.post('/search/:id', checkToken, async (req, resp) => {
   let tantargyak = [];
   const error = '';
   if (req.body.nametantargy) {
@@ -30,7 +30,7 @@ router.post('/search/:id', async (req, resp) => {
   resp.render('sajat', { error, tantargyak });
 });
 
-router.get('/getfile/:id', async (req, resp) => {
+router.get('/getfile/:id', checkToken, async (req, resp) => {
   try {
     const tantargy = {
       targykod: req.params.id,
