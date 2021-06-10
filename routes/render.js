@@ -10,13 +10,24 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.get('/', async (req, resp) => {
-  const tantargyak = await db.findAllTantargy();
   const error = '';
-  // console.log(resp.locals);
+  const tantargyak = await db.findAllTantargy();
+
   resp.render('index', { error, tantargyak });
 });
 
-router.get('/getfile/:id', checkToken, async (req, resp) => {
+router.post('/search', async (req, resp) => {
+  let tantargyak = [];
+  const error = '';
+  if (req.body.nametantargy) {
+    tantargyak = await db.getTantargyByName({ nev: req.body.nametantargy });
+  } else {
+    tantargyak = await db.findAllTantargy();
+  }
+  resp.render('index', { error, tantargyak });
+});
+
+router.get('/getfile/:id', async (req, resp) => {
   try {
     const tantargy = {
       targykod: req.params.id,
