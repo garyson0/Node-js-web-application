@@ -6,6 +6,10 @@ import targyakRouter from './routes/targyak.js';
 import fajlokRouter from './routes/classfiles.js';
 import ujTargyRouter from './routes/newclass.js';
 import csatlakozasKilepesRouter from './routes/classjoinleave.js';
+import ujFelhasznaloRouter from './routes/newuser.js';
+import sajatTargyRouter from './routes/sajat.js';
+import controlPanelRouter from './routes/dashboard.js';
+import orarendRouter from './routes/oraraend.js';
 import authRouter from './auth/router.js';
 import { decodeToken } from './auth/middleware.js';
 
@@ -24,6 +28,10 @@ app.use('/targyak', targyakRouter);
 app.use('/classfiles', fajlokRouter);
 app.use('/classjoinleave', csatlakozasKilepesRouter);
 app.use('/ujtargy', ujTargyRouter);
+app.use('/ujfelhasznalo', ujFelhasznaloRouter);
+app.use('/sajat', sajatTargyRouter);
+app.use('/dashboard', controlPanelRouter);
+app.use('/orarend', orarendRouter);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
