@@ -2,7 +2,7 @@ import mysql from 'mysql';
 import util from 'util';
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
+  connectionLimit: 50,
   database: 'webprog',
   host: '127.0.0.1',
   port: 3306,
@@ -35,6 +35,56 @@ export function getTantargyOwner(targy) {
 }
 export function findAllTantargy() {
   return queryPromise('SELECT * FROM Tantargy');
+}
+
+export function findAllTantargyNev() {
+  return queryPromise('SELECT targyNeve FROM Tantargy');
+}
+
+export function findAllTantargyIdName() {
+  return queryPromise('SELECT targyKod,targyNeve FROM Tantargy');
+}
+
+export function findAllTantargyOfTulaj(tulaj) {
+  return queryPromise('SELECT * FROM Tantargy WHERE tulajdonosID = ?', [tulaj.id]);
+}
+
+export function getTantargyByName(targy) {
+  return queryPromise('SELECT * FROM Tantargy WHERE targyNeve LIKE ?', [targy.nev]);
+}
+
+export function getTantargyByNameAndOwner(attr) {
+  return queryPromise('SELECT * FROM Tantargy WHERE targyNeve LIKE ? AND tulajdonosID = ?', [attr.nev, attr.id]);
+}
+
+export function updateTargy(attr) {
+  if (attr.evfolyam) {
+    queryPromise(`UPDATE Tantargy
+    SET evfolyam = ? 
+    WHERE targyKod = ?`,  [attr.evfolyam, attr.targyKod]);
+  }
+
+  if (attr.kurzusokSzama) {
+    queryPromise(`UPDATE Tantargy
+    SET kurzusokSzama = ? 
+    WHERE targyKod = ?`,  [attr.kurzusokSzama, attr.targyKod]);
+  }
+
+  if (attr.szeminariumokSzama) {
+    queryPromise(`UPDATE Tantargy
+    SET szeminariumokSzama = ? 
+    WHERE targyKod = ?`,  [attr.szeminariumokSzama, attr.targyKod]);
+  }
+  if (attr.laborokSzama) {
+    queryPromise(`UPDATE Tantargy
+    SET laborokSzama = ? 
+    WHERE targyKod = ?`,  [attr.laborokSzama, attr.targyKod]);
+  }
+  if (attr.vezetotanar) {
+    queryPromise(`UPDATE Tantargy
+    SET tulajdonosID = ? 
+    WHERE targyKod = ?`,  [attr.vezetotanar, attr.targyKod]);
+  }
 }
 
 export function createFelhasznaloTable() {
@@ -118,12 +168,23 @@ export function tantargyExists(exists) {
   return queryPromise('SELECT 1 FROM Tantargy WHERE targyNeve = ? AND evfolyam = ? AND kurzusokSzama = ? AND szeminariumokSzama = ? AND laborokSzama = ?', [exists.targyneve, exists.targyevfolyam, exists.kurzusokszama, exists.szeminariumokszama, exists.laborokszama]);
 }
 
+/*
 export function createFelhasznaloAuthTable() {
   return queryPromise(`CREATE TABLE IF NOT EXISTS FelhasznaloAuth(
     authId int AUTO_INCREMENT,
     felhasznalonev varchar(250) UNIQUE,
     passwordSalted varchar(400),
     frole varchar(50),
+    PRIMARY KEY(authId)
+);`);
+}
+*/
+
+export function createFelhasznaloAuthTable() {
+  return queryPromise(`CREATE TABLE IF NOT EXISTS FelhasznaloAuth(
+    authId int AUTO_INCREMENT,
+    felhasznalonev varchar(250) UNIQUE,
+    passwordSalted varchar(400),
     PRIMARY KEY(authId)
 );`);
 }
@@ -136,13 +197,57 @@ export function getUserIdByUserName(user) {
   return queryPromise('SELECT authId FROM FelhasznaloAuth WHERE felhasznalonev = ?', [user.username]);
 }
 
+export function getUsersName() {
+  return queryPromise('SELECT felhasznalonev FROM FelhasznaloAuth WHERE felhasznalonev <> ?', 'admin');
+}
+
 export function getPasswordAndSalt(user) {
   return queryPromise('SELECT passwordSalted FROM FelhasznaloAuth WHERE felhasznalonev = ?', [user.username]);
 }
 
+/*
 export function insertFelhasznaloAuth(felhasznalo) {
-  return queryPromise(`INSERT INTO FelhasznaloAuth (felhasznalonev, passwordSalted, frole) VALUES (
-    ?, ?, ?)`, [felhasznalo.felhnev, felhasznalo.pass, felhasznalo.role]);
+  return queryPromise(`INSERT INTO FelhasznaloAuth (felhasznalonev, passwordSalted, frole)
+  VALUES(?, ?, ?)`, [felhasznalo.felhnev, felhasznalo.pass, felhasznalo.role]);
+}
+*/
+
+export function insertFelhasznaloAuth(felhasznalo) {
+  return queryPromise(`INSERT INTO FelhasznaloAuth (felhasznalonev, passwordSalted) VALUES (
+    ?, ?)`, [felhasznalo.felhnev, felhasznalo.pass]);
+}
+
+export function updatePassword(felhasznalo) {
+  return queryPromise(`UPDATE FelhasznaloAuth
+  SET passwordSalted = ?
+  WHERE felhasznalonev = ?`, [felhasznalo.pass, felhasznalo.felhnev]);
+}
+export function createOrarendTable() {
+  return queryPromise(`CREATE TABLE IF NOT EXISTS Orarend(
+    orarendID int AUTO_INCREMENT,
+    nap varchar(50),
+    mettol int,
+    meddig int,
+    tanarUsername varchar(250),
+    targyNeve varchar(250),
+    PRIMARY KEY(orarendID)
+);`);
+}
+
+export function insertOrarend(orarend) {
+  return queryPromise('INSERT INTO Orarend(nap,mettol,meddig,tanarUsername,targyNeve) VALUES (?,?,?,?,?)', [orarend.nap, orarend.mettol, orarend.meddig, orarend.tanar, orarend.targy]);
+}
+
+export function checkOrarendFreeSpace(tanar) {
+  return queryPromise('SELECT orarendID FROM Orarend WHERE tanarUsername = ? AND nap = ? AND mettol = ? AND meddig = ?', [tanar.tanarnev, tanar.nap, tanar.mettol, tanar.meddig]);
+}
+
+export function getOrarend(tanar) {
+  return queryPromise('SELECT nap, mettol , meddig, targyNeve FROM Orarend WHERE tanarUsername = ?', [tanar.username]);
+}
+
+export function deleteOrarend(tanar) {
+  return queryPromise('DELETE FROM Orarend WHERE tanarUsername = ? AND nap = ? AND mettol = ? AND meddig = ? AND targyNeve = ?', [tanar.tanar, tanar.nap, tanar.mettol, tanar.meddig, tanar.targy]);
 }
 
 createTantargyTable();
@@ -150,13 +255,4 @@ createFelhasznaloTable();
 createJelentkezesTable();
 createAllomanyokTable();
 createFelhasznaloAuthTable();
-// teszteleshez
-let felhasznalo = {
-  nev: 'Elemer',
-};
-insertFelhasznalo(felhasznalo);
-
-felhasznalo = {
-  nev: 'Geza',
-};
-insertFelhasznalo(felhasznalo);
+createOrarendTable();
