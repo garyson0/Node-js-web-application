@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/:id', checkToken, async (req, resp) => {
+router.get('/:id', async (req, resp) => {
   const error = '';
   const targyId = { targykod: req.params.id };
   const [targyAdataiTmp, targyTagjai, targyFilek, targyTulajaTmp] = await Promise.all(
