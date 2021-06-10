@@ -5,7 +5,6 @@ export function decodeToken(req, resp, next) {
   if (req.cookies.token) {
     try {
       const tokenObject = jwt.verify(req.cookies.token, secret);
-      // szeminarimuon mukodott ugyanilyen formaban, ezert disableltem, de probalom javitani
       // eslint-disable-next-line no-param-reassign
       resp.locals.tokenObject = tokenObject;
     } catch (err) {
@@ -20,7 +19,20 @@ export function checkToken(req, resp, next) {
   if (resp.locals.tokenObject) {
     next();
   } else {
-    resp.status(401);
-    resp.render('login');
+    const error = 'A kért tartalomhoz először jelentkezz be !';
+    resp.status(401).render('login', { error });
+  }
+}
+
+export function checkAdmin(req, resp, next) {
+  if (resp.locals.tokenObject) {
+    if (resp.locals.tokenObject.username === 'admin') next();
+    else {
+      const error = 'Nincs jogosultságod ide belépni!';
+      resp.status(401).render('error', { error });
+    }
+  } else {
+    const error = 'Nincs jogosultságod ide belépni!';
+    resp.status(401).render('error', { error });
   }
 }
