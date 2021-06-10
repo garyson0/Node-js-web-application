@@ -1,13 +1,13 @@
 import express from 'express';
 import * as db from '../db/lab4db.js';
-import { checkToken } from '../auth/middleware.js';
+import { checkAdmin } from '../auth/middleware.js';
 
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/', checkToken, async (req, resp) => {
+router.get('/', checkAdmin, async (req, resp) => {
   const error = '';
 
   const [targyIdLista, felhasznaloLista] = await Promise.all(
@@ -16,7 +16,7 @@ router.get('/', checkToken, async (req, resp) => {
   resp.render('csatlakoz', { error, targyIdLista, felhasznaloLista });
 });
 
-router.post('/', async (req, resp) => {
+router.post('/', checkAdmin,  async (req, resp) => {
   let error = '';
   const targyKod = req.body.targykod;
   const felhasznaloKod = req.body.felhasznalokod;

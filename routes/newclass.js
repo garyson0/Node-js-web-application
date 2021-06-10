@@ -1,18 +1,18 @@
 import express from 'express';
 import * as db from '../db/lab4db.js';
-import { checkToken } from '../auth/middleware.js';
+import { checkToken, checkAdmin } from '../auth/middleware.js';
 
 const router = express.Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/', (req, resp) => {
+router.get('/', checkAdmin, (req, resp) => {
   const error = '';
   resp.render('ujtargy', { error });
 });
 
-router.post('/', checkToken, async (req, resp) => {
+router.post('/', checkAdmin, async (req, resp) => {
   let error = '';
   const namePattern = /^[A-Z][a-z0-9]+$/;
   const targyNeve = (req.body.targyneve).toString();
@@ -51,7 +51,7 @@ router.post('/', checkToken, async (req, resp) => {
       kurzus: kurzusokSzama,
       szem: szeminariumokSzama,
       lab: laborokSzama,
-      tulajdonosid: resp.locals.tokenObject.id,
+      tulajdonosid: req.body.tulajdonosid,
     };
     error = 'Sikeres letrehozas!';
     await db.insertTantargy(ujtargy);
