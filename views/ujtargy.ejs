@@ -9,24 +9,62 @@
 <body id="body-style">
     
     <main>
-        <h1><%- include('name.ejs') %></h1>
-        <h1>Új tantárgy felvitele</h1>
-        <form id="form-targyak" method="POST" action="/ujtargy">
-            <label>Egyedi kód: </label>
-            <input type="number" name="targykod" min="1" required> <br>
-            <label>Tárgy neve: </label>
-            <input type="text" name="targyneve" pattern="[A-Z][a-z0-9]+" required> <br>
-            <label>Évfolyam: </label>
-            <input type="number" name="targyevfolyam" min="1" max="3" required> <br>
-            <label>Kurzusok száma: </label>
-            <input type="number" name="kurzusokszama" min="7" required> <br>
-            <label>Szemináriumok száma: </label>
-            <input type="number" name="szeminariumokszama" min="7" required> <br>
-            <label>Laborok száma: </label>
-            <input type="number" name="laborokszama" min="7" required> <br>
-            <input type="submit" value="Submit"> <br>
-        </form>
+        <div class="navbar">
+            <div class="profile">
+                <img src="profile_icon.png" class="leftside">
+                <a>
+                    <% if (typeof tokenObject !== 'undefined') { %>
+                    <%= tokenObject.username %>
+                    <% } else { %>
+                    vendég!
+                    <% } %>
+                </a>
+                <% if (typeof tokenObject !== 'undefined') { %>
+                    <form action="/auth/logout" method="post" class="rightside">
+                        <button type="submit" class="downside"><img id="logoutpic" src="logout.png"></button>
+                    </form>
+                    <% } else { %>
+                    <form action="/auth/login" method="get" class="rightside">
+                        <button type="submit" class="downside"><img id="loginpic" src="login.png"></button>
+                    </form>
+                    <% } %>
+            </div>
+            
+
+            <a class="active" href="/">Főoldal</a>
+            <a href="/classjoinleave">Csatlakozás</a>    
+            <a href="/ujfelhasznalo">Új felhasználó</a>    
+            <a href="/dashboard">Control panel</a>
+        </div>
+
+        <div class="box-bg-dark box-textbox" >
+            <h3>Új tantárgy felvitele</h3>
+            <form id="form-centered" method="POST" action="/ujtargy">
+                <label>Egyedi kód: </label>
+                <input type="number" name="targykod" min="1" required> <br>
+                <label>Tárgy neve: </label>
+                <input type="text" name="targyneve" pattern="[A-Z][a-z0-9]+" required> <br>
+                <label>Évfolyam: </label>
+                <input type="number" name="targyevfolyam" min="1" max="3" required> <br>
+                <label>Kurzusok száma: </label>
+                <input type="number" name="kurzusokszama" min="7" required> <br>
+                <label>Szemináriumok száma: </label>
+                <input type="number" name="szeminariumokszama" min="7" required> <br>
+                <label>Laborok száma: </label>
+                <input type="number" name="laborokszama" min="7" required> <br>
+                <label>Vezető tanár azonosítója:</label>
+                <input type="number" name="tuladonosid" required> <br>
+                <input type="submit" value="Submit"> <br>
+            </form>
+        </div>
+
+        
     </main>
+
+    
+    <footer>
+        <p>@ Vén Gergő-Tivadar</p>
+    </footer>
     
 
     
