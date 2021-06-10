@@ -10,12 +10,15 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.get('/login', (req, resp) => {
-  resp.render('login');
+  const error = '';
+  resp.render('login', { error });
 });
 
 router.post('/login', async (req, resp) => {
+  let error = '';
   if (!req.body.username || !req.body.password) {
-    resp.status(401).json('Hianyzo felhasznalonev vagy jelszo!');
+    error = 'Hianyzo felhasznalonev vagy jelszo!';
+    resp.status(401).render('login', { error });
   }
   const user = {
     username: req.body.username,
@@ -24,7 +27,8 @@ router.post('/login', async (req, resp) => {
   const userExistsTmp = userExists.length;
 
   if (userExistsTmp !== 1) {
-    resp.status(401).json('Hiba: nem letezo felhasznalonev');
+    error = 'Hiba: nem letezo felhasznalonev';
+    resp.status(401).render('login', { error });
   }
 
   const userID = await db.getUserIdByUserName(user);
@@ -40,26 +44,8 @@ router.post('/login', async (req, resp) => {
     });
     resp.redirect('/');
   } else {
-    resp.status(401).json('Hibas jelszo!');
-  }
-});
-
-router.post('/regisztral', async (req, resp) => {
-  if (!req.body.username || !req.body.password) {
-    resp.status(401).json('Hianyzo felhasznalonev vagy jelszo!');
-  }
-
-  const registerUser = {
-    felhnev: req.body.username,
-    pass: bcrypt.hash(req.body.password, 10),
-    role: 'user',
-  };
-
-  try {
-    await db.insertFelhasznaloAuth(registerUser);
-    resp.redirect('/');
-  } catch (err) {
-    console.log(err.message);
+    error = 'Hibas jelszo!';
+    resp.status(401).render('login', { error });
   }
 });
 
