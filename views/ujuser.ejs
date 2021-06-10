@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Diák csatlakozása/kilése adott tárgyhoz/ból</title>
+    <title>Új felhasználó</title>
 </head>
 <body id="body-style">
+    
     <main>
         <div class="navbar">
             <div class="profile">
@@ -31,46 +32,35 @@
             
 
             <a class="active" href="/">Főoldal</a>
+            <a href="/classjoinleave">Csatlakozás</a>
             <a href="/ujtargy">Új tárgy</a>
-            <a href="/ujfelhasznalo">Új felhasználó</a>
             <a href="/dashboard">Control panel</a>
-        
+            
+
         </div>
 
         <div class="box-bg-dark box-textbox" >
-            <h3>Csatlakozás és kilépés adott tárgyhoz/ból</h3>
-            <form id="form-centered" method="POST" action="/classjoinleave" >
-                <label>Művelet:</label>
-                <select name="muvelet">
-                    <option value="kilep">Kilépés</option>
-                    <option value="csatlakoz">Csatlakozás</option>
-                </select>
-                <br>
-                <label>Tantárgy kód: </label>
-                <select name="targykod">
-                    <% targyIdLista.forEach((id) => { %>
-                        <option value="<%= id.targyKod %>"><%= id.targyKod %></option>
-                    <% }); %>
-                </select>
-                <br>
-                <label>Felhasználó kód: </label>
-                <select name="felhasznalokod">
-                    <% felhasznaloLista.forEach((id) => { %>
-                        <option value="<%= id.felhasznaloKod %>"><%= id.felhasznaloKod %></option>
-                    <% }); %>
-                </select>
+            <h3>Új tanár bevezetése</h3>
+            <form id="form-centered" method="POST" action="/ujfelhasznalo" >
+                <label>Felhasználó név:</label>
+                <input type="text" name="usernamenew" required> <br>
+                <label>Jelszó:</label>
+                <input type="password" name="passwordnew" required> <br>
                 <br>
                 <input type="submit" value="Leccgo!">
                 <br>
-                <p><%= error %></p>
             </form>
         </div>
-        
 
+        
     </main>
+
     
     <footer>
         <p>@ Vén Gergő-Tivadar</p>
     </footer>
+    
+
+    
 </body>
 </html>

@@ -14,108 +14,151 @@
 
 <body id="body-style">
     <main>
-        <h1>
-            <%- include('name.ejs') %>
-        </h1>
-        <h1>Tantárgy adatai</h1>
-        <table id="targyadatai">
-            <tr>
-                <th>Tárgy kódja:</th>
-                <td>
-                    <%= targyAdatai.targyKod %>
-                </td>
-            </tr>
-            <tr>
-                <th>Tárgy neve:</th>
-                <td>
-                    <%= targyAdatai.targyNeve %>
-                </td>
-            </tr>
-            <th>Dedikált évfolyam:</th>
-            <td>
-                <%= targyAdatai.evfolyam %>
-            </td>
-            </tr>
-            <tr>
-                <th>Kurzusok száma:</th>
-                <td>
-                    <%= targyAdatai.kurzusokSzama %>
-                </td>
-            </tr>
-            <tr>
-                <th>Szemináriumok száma:</th>
-                <td>
-                    <%= targyAdatai.szeminariumokSzama %>
-                </td>
-            </tr>
-            <tr>
-                <th>Laborok száma:</th>
-                <td>
-                    <%= targyAdatai.laborokSzama %>
-                </td>
-            </tr>
-        </table>
+        <div class="navbar">
+            <div class="profile">
+                <img src="../profile_icon.png" class="leftside">
+                <a>
+                    <% if (typeof tokenObject !== 'undefined') { %>
+                    <%= tokenObject.username %>
+                    <% } else { %>
+                    vendég!
+                    <% } %>
+                </a>
+                <% if (typeof tokenObject !== 'undefined') { %>
+                    <form action="/auth/logout" method="post" class="rightside">
+                        <button type="submit" class="downside"><img id="logoutpic" src="/logout.png"></button>
+                    </form>
+                    <% } else { %>
+                    <form action="/auth/login" method="get" class="rightside">
+                        <button type="submit" class="downside"><img id="loginpic" src="/login.png"></button>
+                    </form>
+                    <% } %>
+            </div>
+            
 
-        <h1>Tantárgy tagjai</h1>
-        <h3>Beosztások:</h3>
-        <p>0(diák)</p>
-        <p>1(tanár)</p>
-        <table id="targyadatai">
-            <tr>
-                <th>Felhasználó kódja</th>
-                <th>Név</th>
-                <th>Beosztás</th>
-            </tr>
-            <% targyTagjai.forEach((tagok)=> { %>
+            <a class="active" href="/">Főoldal</a>
+            <% if (typeof tokenObject !== 'undefined') { %>
+               <% if (tokenObject.username === 'admin') { %>
+                <a href="/classjoinleave">Csatlakozás</a>
+                <a href="/ujtargy">Új tárgy</a>
+                <a href="/ujfelhasznalo">Új felhasználó</a>
+                <a href="/dashboard">Control panel</a>
+               <% } %>
+            <% } %>
+        
+        </div>
+
+        <div class="box-bg-dark box-textbox" >
+                
+            <h1>Tantárgy adatai</h1>
+            <table id="targyadatai">
                 <tr>
+                    <th>Tárgy kódja:</th>
                     <td>
-                        <%= tagok.felhasznaloKod %>
-                    </td>
-                    <td>
-                        <%= tagok.nev %>
-                    </td>
-                    <td>
-                        <%= tagok.beosztas %>
+                        <%= targyAdatai.targyKod %>
                     </td>
                 </tr>
-                <% }); %>
-        </table>
-    </main>
-    <div>
-        <h1 id="allomanyokcim">Tantárgyhoz tartozó fájlok</h1>
-        <% targyFilek.forEach((tfile)=> { %>
-            <div class="<%= targyAdatai.targyKod %>" id="<%= tfile.allomanyNev %>">
-                <a href="<%= tfile.letoltInnen %>">
-                    <%= tfile.allomanyNev %>
-                </a>
+                <tr>
+                    <th>Tárgy neve:</th>
+                    <td>
+                        <%= targyAdatai.targyNeve %>
+                    </td>
+                </tr>
+                <th>Dedikált évfolyam:</th>
+                <td>
+                    <%= targyAdatai.evfolyam %>
+                </td>
+                </tr>
+                <tr>
+                    <th>Kurzusok száma:</th>
+                    <td>
+                        <%= targyAdatai.kurzusokSzama %>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Szemináriumok száma:</th>
+                    <td>
+                        <%= targyAdatai.szeminariumokSzama %>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Laborok száma:</th>
+                    <td>
+                        <%= targyAdatai.laborokSzama %>
+                    </td>
+                </tr>
+            </table>
 
-                <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.id === 'admin' ) { %>
-                    <button class="deleteButton"
-                        onclick="deleteTargy('<%= tfile.allomanyNev %>','<%= tokenObject.id %>')">Torles</button>
+            <h1>Tantárgy tagjai</h1>
+            <h3>Beosztások:</h3>
+            <p>0(diák)</p>
+            <p>1(tanár)</p>
+            <table id="targyadatai">
+                <tr>
+                    <th>Felhasználó kódja</th>
+                    <th>Név</th>
+                    <th>Beosztás</th>
+                </tr>
+                <% targyTagjai.forEach((tagok)=> { %>
+                    <tr>
+                        <td>
+                            <%= tagok.felhasznaloKod %>
+                        </td>
+                        <td>
+                            <%= tagok.nev %>
+                        </td>
+                        <td>
+                            <%= tagok.beosztas %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </table>
+
+            <div>
+                <h1 id="allomanyokcim">Tantárgyhoz tartozó fájlok</h1>
+                <% targyFilek.forEach((tfile)=> { %>
+                    <div class="<%= targyAdatai.targyKod %>" id="<%= tfile.allomanyNev %>">
+                        <a href="<%= tfile.letoltInnen %>">
+                            <%= tfile.allomanyNev %>
+                        </a>
+                        
+                        <% if (typeof tokenObject !== 'undefined') { %>
+
+                            <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.username === 'admin' ) { %>
+                                <button class="deleteButton"
+                                    onclick="deleteTargy('<%= tfile.allomanyNev %>','<%= tokenObject.id %>')">Torles</button>
+                            <% } %>
+                            <br>
+                        
+                        <% } %>       
+                 <% }); %>
+                    </div>
+
+                <% if (typeof tokenObject !== 'undefined') { %>
+                    <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.username === 'admin') { %>
+                        <div>
+                            <h1>Erőforrás-állomány feltöltése</h1>
+                            <form id="form-eroforrasok" method="POST" action="/classfiles/<%= targyAdatai.targyKod %>"
+                                enctype="multipart/form-data">
+                                <label>Feltöltendő fájlok: </label>
+                                <input type="file" name="targyfilek"> <br>
+                                <input type="submit" value="Feltölt!"> <br>
+                            </form>
+                        </div>
                     <% } %>
-                        <br>
+                    <p>
+                        <%= error %>
+                    </p>
+                <% } %>
+
     
-                <% }); %>
+                
             </div>
-
-
-        
-    </div>
-    <div>
-        <% if (targyTulaja.tulajdonosID === tokenObject.id || tokenObject.id === 'admin') { %>
-            <h1>Erőforrás-állomány feltöltése</h1>
-            <form id="form-eroforrasok" method="POST" action="/classfiles/<%= targyAdatai.targyKod %>"
-                enctype="multipart/form-data">
-                <label>Feltöltendő fájlok: </label>
-                <input type="file" name="targyfilek"> <br>
-                <input type="submit" value="Feltölt!"> <br>
-            </form>
-            <% } %>
-                <p>
-                    <%= error %>
-                </p>
-    </div>
-
+            
+        </div>
+    </main>
+       
+    
     <script src="/script.js"></script>
 
 </body>

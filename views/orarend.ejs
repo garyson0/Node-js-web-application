@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Órarend</title>
+</head>
+<body id="body-style">
+    <main>    
+            <div class="navbar">
+                <div class="profile">
+                    <img src="/profile_icon.png" class="leftside">
+                    <a>
+                        <% if (typeof tokenObject !== 'undefined') { %>
+                        <%= tokenObject.username %>
+                        <% } %> 
+                    </a>
+                    <% if (typeof tokenObject !== 'undefined') { %>
+                    <form action="/auth/logout" method="post" class="rightside">
+                        <button type="submit" class="downside"><img id="logoutpic" src="/logout.png"></button>
+                    </form>
+                    <% } else { %>
+                    <form action="/auth/login" method="get" class="rightside">
+                        <button type="submit" class="downside"><img id="loginpic" src="/login.png"></button>
+                    </form>
+                    <% } %>
+                </div>
+                
+
+                <a class="active" href="/">Főoldal</a>
+                <% if (typeof tokenObject !== 'undefined') { %>
+                    <% if (tokenObject.username === 'admin') { %>
+                    <a href="/classjoinleave">Csatlakozás</a>
+                    <a href="/ujtargy">Új tárgy</a>
+                    <a href="/ujfelhasznalo">Új felhasználó</a>
+                    <a href="/dashboard">Control panel</a>
+                    <% } %>
+                <% } %>
+                
+            
+            </div>
+
+            <div id="mininavbar" class="mininavbar">
+
+                <div id="left">
+                    <a id="targymodosit" onclick="showTargyModifyWindow()">Tantárgyak módosítása</a>
+                </div>
+                
+                <div id="left">
+                    <a id="orarendbeoszt" href="/dashboard/orarend">Órarend beosztás</a>
+                </div>
+
+                <div id="left">
+                    <a id="jelszocsere" href="/dashboard/jelszocsere">Jelszó csere</a>
+                </div>
+               
+            </div>
+
+            
+            <div class="box-bg-dark box-textbox">
+               <% if (error.startsWith('Sikeres')) {%>
+                <p id="succes"><%= error %></p>
+                <% } else { %>
+                <p id="error"><%= error %></p>
+                <% } %>
+                <div id="operation">
+
+                </div>
+            </div>
+
+            <div class="box-bg-dark box-textbox">
+                <h2>Óra hozzáadása/törlése adott tanár órarendjéhez/ből</h2>
+                <form id="form-centered" method="POST" action="/dashboard/orarend">
+                    <label>Művelet:</label>
+                    <select name="muvelet" id="muvelet">
+                        <option value="torol">Törlés</option>
+                        <option value="hozzaad>">Hozzáad</option>
+                    </select>
+                    <br>
+
+                    <label>Tanár: </label>
+                    <select name="tanarnev" id="tanarnev">
+                        <% tanarNevLista.forEach((id) => { %>
+                            <option value="<%= id.felhasznalonev %>"><%= id.felhasznalonev %></option>
+                        <% }); %>
+                    </select>
+                    <br>
+
+
+                    <label>Tantárgy:</label>
+                    <select name="tantargynev">
+                        <% tantargyLista.forEach((id) => { %>
+                            <option value="<%= id.targyNeve %>"><%= id.targyNeve %></option>
+                        <% }); %>
+                    </select>
+                    <br>
+
+                    <label>Nap:</label>
+                    <input type="text" name="nap" required>
+                    <br>
+
+                    <label>Mettől:</label>
+                    <input type="number" name="mettol" min='8' max='20' step="2" required>
+                    <br>
+
+                    <label>Meddig:</label>
+                    <input type="number" name="meddig" min='8' max='20' step="2" required>
+                    </select>
+                    <br>
+
+                    <input type="submit" value="Leccgo">
+                    <button type="submit" value="Töröl">
+                    <button type="button" id="button-general" onclick=showOrarend()>Kigenerál</button>
+                    
+                </form>
+            </div>
+
+            <div class="box-bg-dark box-textbox">
+
+                <h2>Tanár órarendje</h2>
+                <table id="orarend">
+                    <tr>
+                        <th>Óra</th>
+                        <th>Hétfő</th>
+                        <th>Kedd</th>
+                        <th>Szerda</th>
+                        <th>Csütörtök</th>
+                        <th>Péntek</th>
+                    </tr>
+                    <tr>
+
+                        <th>8:00-10:00</th>
+                        <td id="hetfo-8-10"></td>
+                        <td id="kedd-8-10"></td>
+                        <td id="szerda-8-10"></td>
+                        <td id="csutortok-8-10"></td>
+                        <td id="pentek-8-10"></td>
+
+                    </tr>
+                    <tr>
+                        <th>10:00-12:00</th>
+                        <td id="hetfo-10-12"></td>
+                        <td id="kedd-10-12"></td>
+                        <td id="szerda-10-12"></td>
+                        <td id="csutortok-10-12"></td>
+                        <td id="pentek-10-12"></td>
+
+                    </tr>
+                    <tr>
+                        <th>12:00-14:00</th>
+                        <td id="hetfo-12-14"></td>
+                        <td id="kedd-12-14"></td>
+                        <td id="szerda-12-14"></td>
+                        <td id="csutortok-12-14"></td>
+                        <td id="pentek-12-14"></td>
+
+                    </tr>
+                    <tr>
+                        <th>14:00-16:00</th>
+                        <td id="hetfo-14-16"></td>
+                        <td id="kedd-14-16"></td>
+                        <td id="szerda-14-16"></td>
+                        <td id="csutortok-14-16"></td>
+                        <td id="pentek-14-16"></td>
+
+                    </tr>
+                    <tr>
+                        <th>16:00-18:00</th>
+                        <td id="hetfo-16-18"></td>
+                        <td id="kedd-16-18"></td>
+                        <td id="szerda-16-18"></td>
+                        <td id="csutortok-16-18"></td>
+                        <td id="pentek-16-18"></td>
+
+                    </tr>
+                    <tr>
+                        <th>18:00-20:00</th>
+                        <td id="hetfo-18-20"></td>
+                        <td id="kedd-18-20"></td>
+                        <td id="szerda-18-20"></td>
+                        <td id="csutortok-18-20"></td>
+                        <td id="pentek-18-20"></td>
+
+                    </tr>
+                </table>
+                
+            </div>
+
+              
+            
+    </main>
+
+    <script src="/script.js"></script>
+
+ 
+</body>
+</html>

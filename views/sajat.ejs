@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <title>Tantárgyak</title>
 </head>
 <body id="body-style">
     <main>    
             <div class="navbar">
                 <div class="profile">
-                    <img src="profile_icon.png" class="leftside">
+                    <img src="/profile_icon.png" class="leftside">
                     <a>
                         <% if (typeof tokenObject !== 'undefined') { %>
                         <%= tokenObject.username %>
@@ -20,11 +20,11 @@
                     </a>
                     <% if (typeof tokenObject !== 'undefined') { %>
                     <form action="/auth/logout" method="post" class="rightside">
-                        <button type="submit" class="downside"><img id="logoutpic" src="logout.png"></button>
+                        <button type="submit" class="downside"><img id="logoutpic" src="/logout.png"></button>
                     </form>
                     <% } else { %>
                     <form action="/auth/login" method="get" class="rightside">
-                        <button type="submit" class="downside"><img id="loginpic" src="login.png"></button>
+                        <button type="submit" class="downside"><img id="loginpic" src="/login.png"></button>
                     </form>
                     <% } %>
                 </div>
@@ -36,12 +36,10 @@
                     <a href="/classjoinleave">Csatlakozás</a>
                     <a href="/ujtargy">Új tárgy</a>
                     <a href="/ujfelhasznalo">Új felhasználó</a>
-                    <a href="/dashboard">Control panel</a>
                     <% } %>
                 <% } %>
                 <% if (typeof tokenObject !== 'undefined') { %>
                     <% if (tokenObject.username !== 'admin') { %>
-                    <a href="/sajat/<%= tokenObject.id %>">Saját tárgyaim</a>
                     <a href="/orarend">Saját órarend</a>
                     <% } %>
                 <% } %>
@@ -51,7 +49,7 @@
             </div>
 
             <div class="box-bg-dark box-textbox">
-                <form id="searchform" method="POST" action="/search">
+                <form id="searchform" method="POST" action="/sajat/search/<%= tokenObject.id %>">
                     <input type="text" name="nametantargy" placeholder="Tárgy név"/>
                     <input type="submit" value="Keresés"/>
                 </form>    
@@ -68,8 +66,8 @@
                                 <li>Szemináriumok száma: <%= item.szeminariumokSzama %></li>
                                 <li>Laborok száma: <%= item.laborokSzama %></li>
                             </ul>
-                            <a href="/targyak/<%= item.targyKod%>"><img src="syllabus.png" id="icon-in-right-side"></a>
-                            <img src="arrow_down.png" id="icon-in-the-corner" onclick="showFilesOfClass('<%= item.targyKod%>')">
+                            <a href="/targyak/<%= item.targyKod%>"><img src="/syllabus.png" id="icon-in-right-side"></a>
+                            <img src="/arrow_down.png" id="icon-in-the-corner" onclick="showFilesOfClass('<%= item.targyKod%>')">
                     </fieldset> 
                     <% }); %>
                 </div>

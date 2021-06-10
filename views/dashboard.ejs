@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Tantárgyak</title>
+</head>
+<body id="body-style">
+    <main>    
+            <div class="navbar">
+                <div class="profile">
+                    <img src="/profile_icon.png" class="leftside">
+                    <a>
+                        <% if (typeof tokenObject !== 'undefined') { %>
+                        <%= tokenObject.username %>
+                        <% } %> 
+                    </a>
+                    <% if (typeof tokenObject !== 'undefined') { %>
+                    <form action="/auth/logout" method="post" class="rightside">
+                        <button type="submit" class="downside"><img id="logoutpic" src="/logout.png"></button>
+                    </form>
+                    <% } else { %>
+                    <form action="/auth/login" method="get" class="rightside">
+                        <button type="submit" class="downside"><img id="loginpic" src="/login.png"></button>
+                    </form>
+                    <% } %>
+                </div>
+                
+
+                <a class="active" href="/">Főoldal</a>
+                <% if (typeof tokenObject !== 'undefined') { %>
+                    <% if (tokenObject.username === 'admin') { %>
+                    <a href="/classjoinleave">Csatlakozás</a>
+                    <a href="/ujtargy">Új tárgy</a>
+                    <a href="/ujfelhasznalo">Új felhasználó</a>
+                    <% } %>
+                <% } %>
+                
+            
+            </div>
+
+            <div id="mininavbar" class="mininavbar">
+
+                <div id="left">
+                    <a id="targymodosit" onclick="showTargyModifyWindow()">Tantárgyak módosítása</a>
+                </div>
+                
+                <div id="left">
+                    <a id="orarendbeoszt" href="/dashboard/orarend">Órarend beosztás</a>
+                </div>
+
+                <div id="left">
+                    <a id="jelszocsere" href="/dashboard/jelszocsere">Jelszó csere</a>
+                </div>
+            </div>
+
+            
+            
+            <div class="box-bg-dark box-textbox">
+               <% if (error.startsWith('Sikeres')) {%>
+                <p id="succes"><%= error %></p>
+                <% } else { %>
+                <p id="error"><%= error %></p>
+                <% } %>
+                <div id="operation">
+
+                </div>
+            </div>
+              
+            
+    </main>
+
+    <script src="/script.js"></script>
+
+    <footer>
+            <p>@ Vén Gergő-Tivadar</p>
+    </footer>
+</body>
+</html>

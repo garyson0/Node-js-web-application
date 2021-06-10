@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
     <title>Login</title>
 </head>
 <body id="body-style">
     
     <main>
-        <h1>Bejelentkezés</h1>
-        <form id="form-login" method="POST" action="/auth/login">
-            <label>Felhasználó név: </label>
-            <input type="text" name="username" required> <br>
-            <label>Jelszó: </label>
-            <input type="password" name="password" required> <br>
-            <input type="submit" value="Belép"> <br>
-            <button type="submit" formaction="/auth/regisztral">Regisztrál</button>
-        </form>
+        <div class="box-bg-dark box-textbox" >
+            <form id="form-centered" method="POST" action="/auth/login">
+                <p><%= error %></p>
+                <h3>Bejelentkezés</h3>
+                <label>Felhasználó név: </label>
+                <input type="text" name="username" required> <br>
+                <label>Jelszó: </label>
+                <input type="password" name="password" required> <br>
+                <input type="submit" value="Belép"> <br>
+            </form>
+        </div>
     </main>
     
 
-    <link rel="stylesheet" href="../static/style.css">
 
 </body>
 </html>
