@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-lines-per-function */
 function removeElement(id) {
   const elem = document.getElementById(id);
@@ -173,7 +174,7 @@ async function showTargyModifyWindow() {
       form.appendChild(laborLabel);
       form.appendChild(laborokInput);
       form.appendChild(br.cloneNode());
-    
+
       form.appendChild(tulajdonosLabel);
       form.appendChild(tulajdonosInput);
       form.appendChild(br.cloneNode());
@@ -206,10 +207,10 @@ async function showOrarend() {
       body: JSON.stringify(data),
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
     }).then((response) => response.text()).then(((responseText) => {
-      const data = JSON.parse(responseText);
-      console.log(data);
+      const respdata = JSON.parse(responseText);
+      console.log(respdata);
 
-      Object.values(data).forEach((val) => {
+      Object.values(respdata).forEach((val) => {
         const id = val.nap.concat('-').concat(val.mettol).concat('-').concat(val.meddig);
         console.log(id);
         const cella = document.getElementById(id);
