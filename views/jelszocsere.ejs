@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Órarend</title>
+</head>
+<body id="body-style">
+    <main>    
+            <div class="navbar">
+                <div class="profile">
+                    <img src="/profile_icon.png" class="leftside">
+                    <a>
+                        <% if (typeof tokenObject !== 'undefined') { %>
+                        <%= tokenObject.username %>
+                        <% } %> 
+                    </a>
+                    <% if (typeof tokenObject !== 'undefined') { %>
+                    <form action="/auth/logout" method="post" class="rightside">
+                        <button type="submit" class="downside"><img id="logoutpic" src="/logout.png"></button>
+                    </form>
+                    <% } else { %>
+                    <form action="/auth/login" method="get" class="rightside">
+                        <button type="submit" class="downside"><img id="loginpic" src="/login.png"></button>
+                    </form>
+                    <% } %>
+                </div>
+                
+
+                <a class="active" href="/">Főoldal</a>
+                <% if (typeof tokenObject !== 'undefined') { %>
+                    <% if (tokenObject.username === 'admin') { %>
+                    <a href="/classjoinleave">Csatlakozás</a>
+                    <a href="/ujtargy">Új tárgy</a>
+                    <a href="/ujfelhasznalo">Új felhasználó</a>
+                    <a href="/dashboard">Control panel</a>
+                    <% } %>
+                <% } %>
+                
+            
+            </div>
+
+            <div id="mininavbar" class="mininavbar">
+                <div id="left">
+                    <a id="targymodosit" onclick="showTargyModifyWindow()">Tantárgyak módosítása</a>
+                </div>
+                
+                <div id="left">
+                    <a id="orarendbeoszt" href="/dashboard/orarend">Órarend beosztás</a>
+                </div>
+            </div>
+
+            <div class="box-bg-dark box-textbox">
+                <% if (error.startsWith('Sikeres')) {%>
+                 <p id="succes"><%= error %></p>
+                 <% } else { %>
+                 <p id="error"><%= error %></p>
+                 <% } %>
+                 <div id="operation">
+ 
+                 </div>
+             </div>
+
+            
+            
+
+            <div class="box-bg-dark box-textbox">
+                <h2>Felhasználóhoz tartozó jelszó csere</h2>
+                <form id="form-centered" method="POST" action="/dashboard/jelszocsere">
+                    <label>Felhasználó:</label>
+                    <select name="felhasznalonev" id="felhasznalonev">
+                        <<% tanarNevLista.forEach((id) => { %>
+                            <option value="<%= id.felhasznalonev %>"><%= id.felhasznalonev %></option>
+                        <% }); %>
+                    </select>
+                    <br>
+
+                    <label>Jelszó: </label>
+                    <input type="password" name="password" id="password" required>
+                    <br>
+
+                    <label>Jelszó mégegyszer:</label>
+                    <input type="password" name="password2" id="password2" required>
+
+                    <br>
+                    <input type="submit" value="Leccgo">
+
+                </form>
+                   
+            </div>
+
+              
+            
+    </main>
+
+    <script src="/script.js"></script>
+
+ 
+</body>
+</html>
